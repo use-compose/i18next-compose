@@ -1,2 +1,2 @@
 // export default { extends: ['@commitlint/config-conventional'] };
-export default {};
+export default { extends: [] };
