@@ -1,0 +1,33 @@
+name: Lint Format Build
+on:
+  pull_request:
+    branches:
+      - main
+# https://zellwk.com/blog/github-actions-deploy/
+jobs:
+  lint-format-build:
+    if: ${{ ! startsWith(github.event.pull_request.head.ref, 'renovate/') }}
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js and pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Format
+        if: ${{ always() }}
+        run: pnpm format
+
+      - name: Build
+        if: ${{ always() }}
+        run: pnpm core build
