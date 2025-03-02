@@ -6,9 +6,16 @@ export default defineConfig({
 
   build: {
     lib: {
-      entry: './src/index.ts',
+      entry: './index.html',
       name: 'i18next-compose',
       fileName: 'index',
     },
+    // TODO: https://github.com/vitejs/vite/discussions/2978#discussioncomment-5276995 ?
+    // generate .vite/manifest.json in outDir
+    // manifest: true,
+    // rollupOptions: {
+    //   // overwrite default .html entry
+    //   input: './index.html',
+    // },
   },
 });
