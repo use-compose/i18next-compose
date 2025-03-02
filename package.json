@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "core": "pnpm --filter core",
+    "dev": "pnpm --filter core dev",
+    "build": "pnpm --filter core build",
+    "preview": "pnpm --filter core preview",
     "lint": "eslint .",
     "format": "prettier --write .",
     "prepare": "husky"
