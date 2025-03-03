@@ -8,6 +8,9 @@
     "dev": "pnpm --filter core dev",
     "build": "pnpm --filter core build",
     "preview": "pnpm --filter core preview",
+    "docs:dev": "pnpm --filter docs docs:dev",
+    "docs:build": "pnpm --filter docs docs:build",
+    "docs:preview": "pnpm --filter docs docs:preview",
     "lint": "eslint .",
     "format": "prettier --write .",
     "prepare": "husky"

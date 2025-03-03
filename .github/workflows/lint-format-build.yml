@@ -30,4 +30,4 @@ jobs:
 
       - name: Build
         if: ${{ always() }}
-        run: pnpm core build
+        run: pnpm build
