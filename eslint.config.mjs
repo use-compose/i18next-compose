@@ -1,5 +1,5 @@
 import pluginJs from '@eslint/js';
-// import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
+import eslintConfigPrettier from 'eslint-config-prettier';
 import pluginVue from 'eslint-plugin-vue';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
@@ -16,7 +16,7 @@ export default [
     languageOptions: { parserOptions: { parser: tseslint.parser } },
   },
   {
-    ignores: ['**/dist/'],
+    ignores: ['**/dist/', '**/cache/', '**/.nuxt/', '**/.nvm/', '**/.output/', '**/.husky/'],
   },
-  // ...eslintPluginPrettierRecommended,
+  eslintConfigPrettier,
 ];
