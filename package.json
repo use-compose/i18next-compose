@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "pnpm --filter core dev",
+    "test": "vitest",
+    "dev": "pnpm --filter=nuxt dev",
+    "dev:build": "pnpm --filter=nuxt build",
+    "dev:generate": "pnpm --filter=nuxt generate",
     "build": "pnpm --filter core build",
     "preview": "pnpm --filter core preview",
     "docs:dev": "pnpm --filter docs docs:dev",
@@ -32,7 +34,8 @@
     "husky": "^9.1.7",
     "lint-staged": "^15.4.3",
     "prettier": "^3.5.1",
-    "prettier-plugin-organize-imports": "^4.1.0"
+    "prettier-plugin-organize-imports": "^4.1.0",
+    "vitest": "^3.0.7"
   },
   "lint-staged": {
     "**/*.{js,ts,tsx}": [
