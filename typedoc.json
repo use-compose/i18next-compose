@@ -7,7 +7,7 @@
   "sidebar": {
     "autoConfiguration": true,
     "format": "vitepress",
-    "pretty": false,
-    "collapsed": true
+    "pretty": true,
+    "collapsed": false
   }
 }
