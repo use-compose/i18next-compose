@@ -1,0 +1,47 @@
+name: Create Pull Request from dev to main
+
+on:
+  push:
+    branches:
+      - dev
+
+permissions: read-all
+
+jobs:
+  create-pr:
+    if: ${{ ! startsWith(github.event.pull_request.head.ref, 'renovate/') }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Check for existing PR
+        id: check_pr
+        run: |
+          PR_EXISTS=$(gh pr list --base main --head dev --json number --jq '. | length')
+          echo "pr_exists=$PR_EXISTS" >> $GITHUB_ENV
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Pull Request
+        if: env.pr_exists == '0'
+        run: |
+          gh pr create --base main --head dev --title "Auto PR: dev to main" --body "This PR is automatically created by a GitHub Action."
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Output PR URL
+        if: env.pr_exists == '0'
+        run: |
+          PR_URL=$(gh pr view --json url --jq '.url')
+          echo "Pull Request created: $PR_URL"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
