@@ -2,7 +2,7 @@ import { Namespace, TOptions } from 'i18next';
 
 export type I18nFormatterHelper = {
   createTranslationHelper: (ns: string) => ttFunc | string;
-  getTGlobal: () => ttFunc | string;
+  getTGlobal: (ns: string) => ttFunc | string;
 };
 
 export type ttFunc = {
