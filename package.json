@@ -15,7 +15,8 @@
     "docs:preview": "pnpm --filter docs docs:preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "prepare": "husky"
+    "prepare": "husky",
+    "typedoc": "typedoc"
   },
   "keywords": [],
   "author": "",
@@ -35,7 +36,10 @@
     "lint-staged": "^15.4.3",
     "prettier": "^3.5.1",
     "prettier-plugin-organize-imports": "^4.1.0",
-    "vitest": "^3.0.7"
+    "vitest": "^3.0.7",
+    "typedoc": "0.28.2",
+    "typedoc-plugin-markdown": "4.6.2",
+    "typedoc-vitepress-theme": "1.1.2"
   },
   "lint-staged": {
     "**/*.{js,ts,tsx}": [
