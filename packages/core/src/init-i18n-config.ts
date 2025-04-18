@@ -1,6 +1,6 @@
 import i18next, { i18n, InitOptions, Resource } from 'i18next';
 
-export { i18nConfigInit };
+export { initI18nConfig };
 
 const i18NConfigOptions: InitOptions = {
   fallbackLng: 'en',
@@ -27,7 +27,7 @@ export interface Createi18nConfigParams {
 
 */
 
-async function i18nConfigInit({
+async function initI18nConfig({
   namespace,
   fallbackLng,
   preload,
