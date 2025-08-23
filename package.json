@@ -6,9 +6,9 @@
   "main": "index.js",
   "scripts": {
     "test": "vitest",
-    "dev": "pnpm --filter=nuxt dev",
-    "dev:build": "pnpm --filter=nuxt build",
-    "dev:generate": "pnpm --filter=nuxt generate",
+    "dev": "pnpm --filter=nuxt-example dev",
+    "dev:build": "pnpm --filter=nuxt-example build",
+    "dev:generate": "pnpm --filter=nuxt-example generate",
     "build": "pnpm --filter core build",
     "preview": "pnpm --filter core preview",
     "docs:dev": "pnpm --filter docs docs:dev",
