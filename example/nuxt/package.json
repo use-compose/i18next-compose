@@ -1,7 +1,7 @@
 {
-  "name": "nuxt",
+  "name": "i18n-compose-nuxt-testapp",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "scripts": {
     "build": "nuxt build",
