@@ -85,7 +85,7 @@ importers:
     dependencies:
       i18next:
         specifier: ^25.0.0
-        version: 25.4.0(typescript@5.9.2)
+        version: 25.4.1(typescript@5.9.2)
     devDependencies:
       typescript:
         specifier: ~5.9.0
@@ -3537,8 +3537,8 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  i18next@25.4.0:
-    resolution: {integrity: sha512-UH5aiamXsO3cfrZFurCHiB6YSs3C+s+XY9UaJllMMSbmaoXILxFgqDEZu4NbfzJFjmUo3BNMa++Rjkr3ofjfLw==}
+  i18next@25.4.1:
+    resolution: {integrity: sha512-sYJX4Ap0SSho1JZppKvc9BeacbpNCdNvKuXMYPUGjDH0XTTdVXmm7UU3l4bvF8nqh70lZNBeLboRYwItBf9jOw==}
     peerDependencies:
       typescript: ^5
     peerDependenciesMeta:
@@ -9371,7 +9371,7 @@ snapshots:
 
   husky@9.1.7: {}
 
-  i18next@25.4.0(typescript@5.9.2):
+  i18next@25.4.1(typescript@5.9.2):
     dependencies:
       '@babel/runtime': 7.28.3
     optionalDependencies:
