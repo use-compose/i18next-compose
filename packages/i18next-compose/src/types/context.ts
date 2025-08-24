@@ -1,4 +1,4 @@
-import type { ttFunc } from 'core';
+import type { ttFunc } from '@use-compose/i18next-core';
 import { i18n } from 'i18next';
 
 export interface ComposeContext {

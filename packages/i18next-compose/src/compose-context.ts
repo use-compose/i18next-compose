@@ -1,4 +1,9 @@
-import { Createi18nConfigParams, i18nFormatter, initI18nConfig, ttFunc } from 'core';
+import {
+  Createi18nConfigParams,
+  i18nFormatter,
+  initI18nConfig,
+  ttFunc,
+} from '@use-compose/i18next-core';
 import i18next, { i18n } from 'i18next';
 import type { ComposeContext } from './types';
 
