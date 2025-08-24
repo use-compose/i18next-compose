@@ -6,6 +6,13 @@ const sidebar = {
   // is on `guide` directory.
   '/': [
     {
+      text: 'Overview',
+      items: [
+        { text: 'Motivation', link: '/motivation' },
+        { text: 'Features', link: '/guide/features' },
+      ],
+    },
+    {
       text: 'Guide',
       items: [
         { text: 'Getting Started', link: '/guide/getting-started' },
