@@ -68,7 +68,7 @@ importers:
 
   example/nuxt:
     dependencies:
-      core:
+      i18next-compose:
         specifier: workspace:*
         version: link:../../packages/core
       nuxt:

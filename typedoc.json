@@ -1,13 +1,17 @@
 {
-  "entryPoints": ["./packages/core/src/*.ts"],
+  "entryPoints": ["./packages/core/src/index.ts"],
   "plugin": ["typedoc-plugin-markdown", "typedoc-vitepress-theme"],
   "out": "./docs/typedoc-api",
   "docsRoot": "./docs",
   "theme": "markdown",
+  "readme": "./docs/README.md",
+  "indexFormat": "table",
+  "useCodeBlocks": true,
+  "disableSources": true,
   "sidebar": {
     "autoConfiguration": true,
     "format": "vitepress",
-    "pretty": true,
+    "pretty": false,
     "collapsed": false
   }
 }

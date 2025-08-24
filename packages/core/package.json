@@ -1,8 +1,12 @@
 {
-  "name": "core",
-  "private": true,
+  "name": "i18next-compose",
   "version": "0.0.1",
+  "private": false,
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arthur-plazanet/i18next-compose.git"
+  },
   "files": [
     "dist"
   ],
@@ -32,5 +36,8 @@
   },
   "dependencies": {
     "i18next": "25.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
