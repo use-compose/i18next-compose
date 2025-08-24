@@ -1,5 +1,5 @@
 {
-  "name": "i18next-compose-root",
+  "name": "@use-compose/i18next-compose-root",
   "version": "1.0.0",
   "private": true,
   "description": "",

@@ -1,5 +1,5 @@
 {
-  "name": "core",
+  "name": "@use-compose/i18next-core",
   "version": "0.0.3",
   "private": false,
   "type": "module",
