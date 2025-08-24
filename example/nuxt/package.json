@@ -1,7 +1,7 @@
 {
   "name": "nuxt-example",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "scripts": {
     "build": "nuxt build",
@@ -14,6 +14,6 @@
     "nuxt": "3.15.4",
     "vue": "latest",
     "vue-router": "latest",
-    "i18next-compose": "workspace:*"
+    "@use-compose/i18next-compose": "workspace:*"
   }
 }

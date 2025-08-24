@@ -47,7 +47,5 @@ async function initI18nConfig({
     initImmediate,
   };
 
-  await i18next.init(i18NConfig);
-
-  return i18next;
+  return i18next.init(i18NConfig).then(() => i18next);
 }

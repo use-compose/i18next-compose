@@ -1,9 +1,10 @@
 import { i18n, Namespace, TOptions } from 'i18next';
 import type { I18nFormatterHelper, ttFunc } from '../../types';
 
-export const i18nFormatterMock = (): I18nFormatterHelper => {
+export const i18NextFormatterMock = (): I18nFormatterHelper => {
   const createTranslationHelper = () => '';
   const getTGlobal = () => '';
+
   return { createTranslationHelper, getTGlobal };
 };
 
@@ -14,6 +15,10 @@ export const i18nFormatterMock = (): I18nFormatterHelper => {
  
  */
 export function i18nFormatter(i18nextConfig: i18n): I18nFormatterHelper {
+  if (!i18nextConfig) {
+    return i18NextFormatterMock();
+  }
+
   /**
    * Create and return a translation helper based on the current namespace
    * @param initialNamespace: string
