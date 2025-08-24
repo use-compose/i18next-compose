@@ -1,13 +1,14 @@
 {
-  "name": "i18next-compose",
+  "name": "i18next-compose-root",
   "version": "1.0.0",
+  "private": true,
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "vitest",
-    "dev": "pnpm --filter=nuxt dev",
-    "dev:build": "pnpm --filter=nuxt build",
-    "dev:generate": "pnpm --filter=nuxt generate",
+    "dev": "pnpm --filter=nuxt-example dev",
+    "dev:build": "pnpm --filter=nuxt-example build",
+    "dev:generate": "pnpm --filter=nuxt-example generate",
     "build": "pnpm --filter core build",
     "preview": "pnpm --filter core preview",
     "docs:dev": "pnpm --filter docs docs:dev",
@@ -22,21 +23,22 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@eslint/js": "^9.20.0",
-    "eslint": "^9.20.0",
-    "eslint-plugin-vue": "^10.0.0",
-    "globals": "^15.14.0",
-    "typescript-eslint": "^8.23.0"
+    "@eslint/js": "9.20.0",
+    "eslint": "9.20.0",
+    "eslint-plugin-vue": "10.0.0",
+    "globals": "15.14.0",
+    "typescript-eslint": "8.23.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.7.1",
-    "@commitlint/config-conventional": "^19.7.1",
-    "eslint-config-prettier": "^10.0.1",
-    "husky": "^9.1.7",
-    "lint-staged": "^16.0.0",
-    "prettier": "^3.5.1",
-    "prettier-plugin-organize-imports": "^4.1.0",
-    "vitest": "^3.0.7",
+    "@changesets/cli": "2.29.6",
+    "@commitlint/cli": "19.7.1",
+    "@commitlint/config-conventional": "19.7.1",
+    "eslint-config-prettier": "10.0.1",
+    "husky": "9.1.7",
+    "lint-staged": "16.0.0",
+    "prettier": "3.5.1",
+    "prettier-plugin-organize-imports": "4.1.0",
+    "vitest": "3.0.7",
     "typedoc": "0.28.10",
     "typedoc-plugin-markdown": "4.8.1",
     "typedoc-vitepress-theme": "1.1.2"
@@ -46,5 +48,9 @@
       "eslint --fix"
     ],
     "**/*": "prettier --write --ignore-unknown"
+  },
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=9"
   }
 }
