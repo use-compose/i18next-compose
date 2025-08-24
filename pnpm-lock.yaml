@@ -97,8 +97,8 @@ importers:
         specifier: 6.0.15
         version: 6.0.15(@types/node@24.3.0)(jiti@2.5.1)(terser@5.43.1)(yaml@2.8.1)
       vite-plugin-dts:
-        specifier: 4.5.0
-        version: 4.5.0(@types/node@24.3.0)(rollup@4.47.1)(typescript@5.9.2)(vite@6.0.15(@types/node@24.3.0)(jiti@2.5.1)(terser@5.43.1)(yaml@2.8.1))
+        specifier: 4.5.4
+        version: 4.5.4(@types/node@24.3.0)(rollup@4.47.1)(typescript@5.9.2)(vite@6.0.15(@types/node@24.3.0)(jiti@2.5.1)(terser@5.43.1)(yaml@2.8.1))
       vitest:
         specifier: 3.0.7
         version: 3.0.7(@types/node@24.3.0)(jiti@2.5.1)(terser@5.43.1)(yaml@2.8.1)
@@ -5379,8 +5379,8 @@ packages:
       vue-tsc:
         optional: true
 
-  vite-plugin-dts@4.5.0:
-    resolution: {integrity: sha512-M1lrPTdi7gilLYRZoLmGYnl4fbPryVYsehPN9JgaxjJKTs8/f7tuAlvCCvOLB5gRDQTTKnptBcB0ACsaw2wNLw==}
+  vite-plugin-dts@4.5.4:
+    resolution: {integrity: sha512-d4sOM8M/8z7vRXHHq/ebbblfaxENjogAAekcfcDCCwAyvGqnPrc7f4NZbvItS+g4WTgerW0xDwSz5qz11JT3vg==}
     peerDependencies:
       typescript: '*'
       vite: '*'
@@ -11613,7 +11613,7 @@ snapshots:
       optionator: 0.9.4
       typescript: 5.9.2
 
-  vite-plugin-dts@4.5.0(@types/node@24.3.0)(rollup@4.47.1)(typescript@5.9.2)(vite@6.0.15(@types/node@24.3.0)(jiti@2.5.1)(terser@5.43.1)(yaml@2.8.1)):
+  vite-plugin-dts@4.5.4(@types/node@24.3.0)(rollup@4.47.1)(typescript@5.9.2)(vite@6.0.15(@types/node@24.3.0)(jiti@2.5.1)(terser@5.43.1)(yaml@2.8.1)):
     dependencies:
       '@microsoft/api-extractor': 7.52.11(@types/node@24.3.0)
       '@rollup/pluginutils': 5.2.0(rollup@4.47.1)
@@ -11622,7 +11622,7 @@ snapshots:
       compare-versions: 6.1.1
       debug: 4.4.1
       kolorist: 1.8.0
-      local-pkg: 0.5.1
+      local-pkg: 1.1.2
       magic-string: 0.30.18
       typescript: 5.9.2
     optionalDependencies:
