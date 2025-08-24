@@ -1,0 +1,67 @@
+[core](../index.md) / Createi18nConfigParams
+
+# Interface: Createi18nConfigParams
+
+## Properties
+
+### debug?
+
+```ts
+optional debug: boolean;
+```
+
+---
+
+### fallbackLng
+
+```ts
+fallbackLng: string;
+```
+
+---
+
+### initImmediate?
+
+```ts
+optional initImmediate: boolean;
+```
+
+---
+
+### lng
+
+```ts
+lng: string;
+```
+
+---
+
+### namespace
+
+```ts
+namespace: string;
+```
+
+---
+
+### preload?
+
+```ts
+optional preload: string[];
+```
+
+---
+
+### resources?
+
+```ts
+optional resources: Resource;
+```
+
+---
+
+### supportedLanguages
+
+```ts
+supportedLanguages: string[];
+```
