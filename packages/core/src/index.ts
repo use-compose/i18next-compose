@@ -1,27 +1,3 @@
-// import { setupCounter } from '../lib/main';
-import './style.css';
-// import typescriptLogo from './typescript.svg';
-export { composeContext } from './compose-context';
 export { initI18nConfig, type Createi18nConfigParams } from './init-i18n-config';
-export type { ComposeContext, I18nFormatterHelper, ttFunc } from './types';
-export { getFlagEmoji, i18nFormatter, i18nFormatterMock } from './utils';
-// document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-//   <div>
-//     <a href="https://vite.dev" target="_blank">
-//             <img src="/vite.svg" class="logo" alt="Vite logo" />
-//           </a>
-//           <a href="https://www.typescriptlang.org/" target="_blank">
-//             <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-//           </a>
-//           <h1>Vite + TypeScript</h1>
-//           <div class="card">
-//       <button id="counter" type="button">sdfsdfsdfsdf</button>
-//     </div>
-//     <p class="read-the-docs">
-//       Click on the Vite and TypeScript logos to learn more
-//       Click on the Vite asdfsdfnd TypeScript logos to learn more
-//     </p>
-//   </div>
-// `;
-
-// setupCounter(document.querySelector<HTMLButtonElement>('#counter')!);
+export type { I18nFormatterHelper, ttFunc } from './types';
+export { getFlagEmoji, i18NextFormatterMock, i18nFormatter } from './utils';

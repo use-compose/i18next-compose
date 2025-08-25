@@ -1,5 +1,5 @@
-import type { ComposeContext, Createi18nConfigParams } from 'core';
-import { composeContext } from 'core';
+import type { ComposeContext, Createi18nConfigParams } from 'i18next-compose';
+import { composeContext } from 'i18next-compose';
 
 export default defineNuxtPlugin(
   async (): Promise<{

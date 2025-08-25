@@ -4,5 +4,6 @@
 
 ### Patch Changes
 
+- Updated dependencies [88b3b0b]
 - Updated dependencies [9555fc3]
-  - i18next-compose@0.0.2
+  - i18next-compose@0.0.1

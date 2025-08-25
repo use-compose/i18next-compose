@@ -1,10 +1,10 @@
 # core
 
-## 0.0.2
+## 0.0.3
 
 ### Patch Changes
 
-- 9555fc3: Initial
+- 88b3b0b: Initial patch
 
 ## 0.0.1
 

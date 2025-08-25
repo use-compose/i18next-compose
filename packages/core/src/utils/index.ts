@@ -1,2 +1,2 @@
-export { i18nFormatter, i18nFormatterMock } from './formatter/i18n';
+export { i18NextFormatterMock, i18nFormatter } from './formatter/i18n';
 export { getFlagEmoji } from './iso-to-emoji';
