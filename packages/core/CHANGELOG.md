@@ -1,5 +1,11 @@
 # core
 
+## 0.0.4
+
+### Patch Changes
+
+- 20d42bb: Support backend fs option config
+
 ## 0.0.3
 
 ### Patch Changes
