@@ -8,10 +8,9 @@ order: 1
 ## Overview
 
 One of the biggest challenge in Engineering is to ensure that everyone is on the same page.
-
 This can relate to the codebase, the documentation, etc. It's often related as to be on the same **boat**.
 
-One biggest challenge is to share cross-team knowledge and doing processes that involve multiple teams.
+And cometimes it goes beyond Engineering, and is to share cross-team knowledge and doing processes that involve multiple teams.
 Translations are a good example of this. They involve:
 
 - **Developers**: to implement the translation process
@@ -21,7 +20,7 @@ Translations are a good example of this. They involve:
 - **Content Writers**: to write the content
   etc.
 
-  This Library aims to provide a simple and efficient way to manage translations in a Vue or Nuxt project.
+This Library aims to provide a simple and efficient way to manage translations in a Vue or Nuxt project.
 
 ## Installation
 
