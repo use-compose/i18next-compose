@@ -1,5 +1,17 @@
 # core
 
+## 0.1.0
+
+### Minor Changes
+
+- bf0544b: First minor iteration POC
+
+## 0.0.4
+
+### Patch Changes
+
+- 20d42bb: Support backend fs option config
+
 ## 0.0.3
 
 ### Patch Changes

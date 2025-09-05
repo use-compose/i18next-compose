@@ -2,7 +2,7 @@
   "name": "i18next-compose",
   "description": "Compose your i18next instance and bring contributors on the same boat",
   "private": false,
-  "version": "0.0.1",
+  "version": "0.1.0",
   "type": "module",
   "repository": {
     "type": "git",
