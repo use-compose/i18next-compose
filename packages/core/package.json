@@ -17,9 +17,8 @@
     "./package.json": "./package.json",
     ".": {
       "import": "./dist/index.mjs",
-      "module": "./dist/index.js",
       "types": "./dist/index.d.ts",
-      "require": "./dist/index.cjs"
+      "require": "./dist/index.js"
     }
   },
   "scripts": {
@@ -35,7 +34,8 @@
     "vitest": "3.0.9"
   },
   "dependencies": {
-    "i18next": "25.0.2"
+    "i18next": "25.0.2",
+    "i18next-fs-backend": "2.6.0"
   },
   "publishConfig": {
     "access": "public"

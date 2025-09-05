@@ -21,7 +21,7 @@ Translations are a good example of this. They involve:
 - **Content Writers**: to write the content
   etc.
 
-A **raft** is a boat that has everything to be built. And for this, simplicity and efficient tools are needed.
+  This Library aims to provide a simple and efficient way to manage translations in a Vue or Nuxt project.
 
 ## Installation
 

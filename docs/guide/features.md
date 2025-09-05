@@ -7,52 +7,80 @@ order: 1
 
 From SVG files to Vue Components that you own.
 
-## Build-time SVG to Vue Component:
+## Translations parsing
 
-- One Vue component is created per `.svg` file
-- Use of the initial name of the icon, converted to PascalCase or snake-case with optional prefix and suffix.
-  Example `user-badge.svg` can give:
-  - `<IconUserBadge />`
-  - `<UserBadgeIcon />`
-  - `<user-badge />`
-- Optional support for folder-based namespacing - icon Components can directly be generated in your codebase, making versioning possible
+Support for rendering complex translations that involve components and values in one single translation string.
 
-## Auto-Registration in Nuxt and Typing
+Example:
 
-- Full auto-import support (no manual registration) - each icon will be automatically imported and registered in the Nuxt project as individual Vue component in the tree
-- Type-safe usage in `<template>`
-- Works with Volar, `<script setup>`, and TSX
+1. Initial code:
 
-## SVG Output - Accessibility
+```html
+<template>
+  <!-- using a render function, this extra div could potentially be avoided -->
+  <div>
+    Hallo und <NuxtLink :to="link1">Wilkommen zurück</NuxtLink>! Viel Spaß
+    <NuxtLink2 :to="link2">mit unserer <SelfClosingComponent :prop="nameOfProp" /> App</NuxtLink2>
+    <library-component> sie uns </library-component> wissen
+  </div>
+</template>
+```
 
-- Components render a single `<svg>` element
-- No additional wrappers or nested templates
-- Attributes from the original SVG are preserved
+2. Translation string:
+   `"Hallo und <NuxtLink>Wilkommen zurück</NuxtLink>! Viel Spaß <NuxtLink2>mit unserer <SelfClosingComponent />App</NuxtLink2><library-component> sie uns </library-component/> wissen"`
 
-## Theming with CSS Custom Properties and Runtime Access
+3. Using the `RtTranslate` component:
 
-- `fill`, `stroke`, and `stroke-width` are replaced with CSS Custom Properties ([CSS Custom Properties Guide](https://css-tricks.com/a-complete-guide-to-custom-properties/)) making theming directly possible
-- Original values are preserved as fallbacks
-- Since CSS Custom Properties work at runtime, they can be used to dynamically change icons components in cascade for each individual icons and property (fill, stroke, stroke-width, etc.)
-- Compatible with global tokens or scoped styles
+```vue
+<RtTranslate
+  :rt-translate="rtTranslate"
+  i18n-key="name_of_key"
+  :components="{
+    NuxtLink: { to: someLocation },
+    'NuxtLink-2': { to: anoTherLocation, prop2: value },
+    'library-component': {},
+  }"
+  :values="{ valueToInterpolate1: 'test' }"
+/>
+```
 
-## Developer Experience:
+Parse a given translation string and return an array of strings and objects e.g. for a key
 
-- Can provide auto-completion and type-checking in your editor for each icons, as they are directly part of the Nuxt Build like any other component
-- Vue DevTools support - unlike other solutions, this module generates Vue components that can be inspected and debugged in the Vue DevTools
+```json
+"Wunderbar! <NuxtLink>The customer <strong>{{ customer.name }}</strong></NuxtLink> hat den <NuxtLink-2>Kurs</NuxtLink-2> erfolgreich absolviert."
+```
 
-The aim is to combine the control and quality of hand-authored components with the scalability and consistency of a build tool.
+Will return
+
+```ts
+[
+  'Wunderbar! ',
+  {
+    tag: 'NuxtLink',
+    content: [
+      'The customer ',
+      {
+        tag: 'strong',
+        content: 'Arthur',
+      },
+    ],
+  },
+  ' hat den ',
+  {
+    tag: 'NuxtLink-2',
+    content: 'Kurs',
+  },
+  ' erfolgreich absolviert.',
+];
+```
 
 ## Comparison with Other Icon Strategies
 
-| Feature / Approach   | Third-party Libraries | Manual Vue Components | SVG Loaders (`vite-svg-loader`) | **This Module**    |
-| -------------------- | --------------------- | --------------------- | ------------------------------- | ------------------ |
-| **Setup**            | ✅ Easy               | ⚠️ Manual             | ⚠️ Requires config              | ✅ Minimal         |
-| **Output**           | `<svg>` (clean)       | `<svg>` (custom)      | `<svg>` (inline)                | `<svg>` (clean)    |
-| **Theming**          | ⚠️ Limited props      | ✅ Full control       | ✅ Flexible via CSS             | ✅ CSS variables   |
-| **DX & Typing**      | ✅ Standard           | ✅ Full control       | ✅ With imports                 | ✅ Auto-typed      |
-| **Scalability**      | ✅ Tree-shakable      | ⚠️ Tedious manually   | ✅ File-based, fast             | ✅ Build-optimized |
-| **Nuxt Integration** | ✅ Works by default   | ✅ Auto-importable    | ✅ With module/plugin           | ✅ Native support  |
+| Feature / Approach                               | Translators                                  | Content Writers | Developers          | Other contributors (non-developer) |
+| ------------------------------------------------ | -------------------------------------------- | --------------- | ------------------- | ---------------------------------- |
+| **Strong convention on the naming**              | ✅                                           | ✅              | ✅                  | ✅ Minimal                         |
+| **Several namespace levels**                     | ~                                            | ✅              | ✅                  | `<svg>` (clean)                    |
+| **Full Interpolation of Components / HTML tags** | Translators - Readability for non-developers | ✅ Full control | ✅ Flexible via CSS | ✅ CSS variables                   |
 
 ## Example
 
