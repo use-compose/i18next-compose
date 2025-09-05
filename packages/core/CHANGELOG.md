@@ -1,5 +1,11 @@
 # core
 
+## 0.1.0
+
+### Minor Changes
+
+- bf0544b: First minor iteration POC
+
 ## 0.0.4
 
 ### Patch Changes

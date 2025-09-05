@@ -1,5 +1,16 @@
 # i18next-compose
 
+## 0.1.0
+
+### Minor Changes
+
+- bf0544b: First minor iteration POC
+
+### Patch Changes
+
+- Updated dependencies [bf0544b]
+  - @use-compose/i18next-core@0.1.0
+
 ## 0.0.2
 
 ### Patch Changes
