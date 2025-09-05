@@ -32,9 +32,6 @@ export default defineConfig({
     // TODO: https://github.com/vitejs/vite/discussions/2978#discussioncomment-5276995 ?
     // generate .vite/manifest.json in outDir
     // manifest: true,
-    // rollupOptions: {
-    //   // overwrite default .html entry
-    //   input: './index.html',
-    // },
+    rollupOptions: { external: ['@use-compose/i18next-core'] },
   },
 });

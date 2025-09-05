@@ -15,13 +15,17 @@ export default defineConfig({
   ],
   resolve: {
     alias: [{ find: '@', replacement: fileURLToPath(new URL('./src/', import.meta.url)) }],
+
+    // Avoid browser polyfills for node built-ins
+    // Ensure resolve favors node conditions (prevents browser extern shims)
+    conditions: ['node', 'module', 'import', 'default'],
   },
   build: {
     lib: {
       entry: './src/index.ts',
-      name: 'i18next-compose',
+      name: '@use-compose/i18next-core',
       fileName: (format) => {
-        if (format === 'es') return 'index.mjs';
+        if (format === 'es') return 'index.js';
         if (format === 'cjs') return 'index.cjs';
         return `index.${format}.js`;
       },
@@ -29,12 +33,10 @@ export default defineConfig({
     },
     outDir: 'dist',
     emptyOutDir: true,
-    // TODO: https://github.com/vitejs/vite/discussions/2978#discussioncomment-5276995 ?
-    // generate .vite/manifest.json in outDir
-    // manifest: true,
-    // rollupOptions: {
-    //   // overwrite default .html entry
-    //   input: './index.html',
-    // },
+    rollupOptions: {
+      external: ['i18next', 'i18next-fs-backend'],
+    },
+    // Optional: let modern features pass through if any remain
+    target: 'esnext',
   },
 });
