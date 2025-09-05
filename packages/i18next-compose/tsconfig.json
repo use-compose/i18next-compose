@@ -1,3 +1,16 @@
 {
-  "extends": "../../tsconfig.base.json"
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true, // <= important
+    "rootDir": "src",
+    "outDir": "dist",
+    "noEmit": false,
+    "moduleResolution": "bundler"
+  },
+  "references": [{ "path": "../core" }],
+  "include": ["src"],
+  "exclude": ["dist", "node_modules", "**/*.test.*"]
 }
