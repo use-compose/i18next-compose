@@ -1,5 +1,11 @@
 # i18next-compose
 
+## 0.1.1
+
+### Patch Changes
+
+- 4dd4049: Publish as short name
+
 ## 0.1.0
 
 ### Minor Changes
