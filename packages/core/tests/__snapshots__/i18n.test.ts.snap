@@ -1,0 +1,9 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Create a custom config and access translation keys through formatter > i18n 1`] = `"Value of test key2"`;
+
+exports[`Create a custom config and access translation keys through formatter > i18nFormatter functions 1`] = `"Value of test key2"`;
+
+exports[`i18n > i18n 1`] = `"Value of test key2"`;
+
+exports[`i18n 1`] = `"Value of test key2"`;

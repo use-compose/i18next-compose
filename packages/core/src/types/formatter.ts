@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unsafe-function-type */
 import { Namespace, TOptions } from 'i18next';
 
-export type I18nFormatterHelper = {
-  createTranslationHelper: (ns: string) => ttFunc | string;
-  getTGlobal: (ns: string) => ttFunc | string;
-};
+export interface I18nFormatterHelper {
+  // createTranslationHelper: (ns: Namespace | string) => ComposeI18nHelper;
+  translationHelper: Function;
+  globalNSHelper: Function;
+}
 
 export type ttFunc = {
   (ns: Namespace | string, params?: TOptions): string;

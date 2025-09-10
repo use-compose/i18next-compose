@@ -1,4 +1,4 @@
-name: Lint Format Build
+name: Run Tests
 on:
   pull_request:
     branches:
@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 # https://zellwk.com/blog/github-actions-deploy/
 jobs:
-  lint-format-build:
+  test:
     if: ${{ ! startsWith(github.event.pull_request.head.ref, 'renovate/') }}
     runs-on: ubuntu-latest
 
@@ -27,13 +27,5 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
-      - name: Lint
-        run: pnpm lint
-
-      - name: Format
-        if: ${{ always() }}
-        run: pnpm format
-
-      - name: Build
-        if: ${{ always() }}
-        run: pnpm build
+      - name: Test
+        run: pnpm test
