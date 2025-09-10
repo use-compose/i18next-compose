@@ -1,12 +1,14 @@
 import { i18n, Namespace, TOptions } from 'i18next';
-import type { I18nFormatterHelper, ttFunc } from '../../types';
+import type { I18nFormatterHelper } from '../../types';
 
 export const i18NextFormatterMock = (): I18nFormatterHelper => {
-  const createTranslationHelper = () => '';
-  const getTGlobal = () => '';
+  const translationHelper = () => '';
+  const globalNSHelper = () => '';
 
-  return { createTranslationHelper, getTGlobal };
+  return { translationHelper, globalNSHelper };
 };
+
+export type ComposeI18nHelper = (level3: Namespace | string, params?: TOptions) => string;
 
 /**
  * Description
@@ -21,21 +23,22 @@ export function i18nFormatter(i18nextConfig: i18n): I18nFormatterHelper {
 
   /**
    * Create and return a translation helper based on the current namespace
-   * @param initialNamespace: string
+   * @param level2: string
    * @returns {ttFunc}
    */
-  const createTranslationHelper = (initialNamespace: string): ttFunc => {
-    const t = i18nextConfig.t;
+  const translationHelper = (level2: string): ComposeI18nHelper => {
+    // t contains the translation function from the given configuration
 
+    const t = i18nextConfig.t;
     /*
      * We do not enforce type of ns, since we need to also dynamically access plurals
      * e.g. we do not want to write _one or _other in the namespace
      */
-    function composeT(ns: Namespace | string, params?: TOptions): string {
-      return t(`${initialNamespace}.${ns}`, params) ?? '';
+    function composeT(level3: Namespace | string, params?: TOptions): string {
+      return t(`${level2}.${level3}`, params) ?? '';
     }
 
-    composeT.namespace = initialNamespace;
+    // composeT.namespace = level2;
     return composeT;
   };
 
@@ -43,9 +46,9 @@ export function i18nFormatter(i18nextConfig: i18n): I18nFormatterHelper {
    * Return helper associated to global namespace
    * @param ns
    */
-  const getTGlobal = (ns: string): string => {
-    return createTranslationHelper('global')(ns);
+  const globalNSHelper = (level3: string): string => {
+    return translationHelper('global')(level3);
   };
 
-  return { createTranslationHelper, getTGlobal };
+  return { translationHelper, globalNSHelper };
 }

@@ -52,21 +52,21 @@ async function initI18nConfig({
     initImmediate,
   };
 
-  const fsBackendConfig: FsBackendOptions = {
-    loadPath: backend?.loadPath,
-    addPath: backend?.addPath,
-    ident: backend?.ident,
-    parse: backend?.parse,
-    stringify: backend?.stringify,
-    expirationTime: backend?.expirationTime,
-  };
-
   function withFsBackend(backend: FsBackendOptions): i18n {
     i18NConfig.backend = backend;
     return initializedI18n.use(FsBackend);
   }
 
   if (backend) {
+    const fsBackendConfig: FsBackendOptions = {
+      loadPath: backend?.loadPath,
+      addPath: backend?.addPath,
+      ident: backend?.ident,
+      parse: backend?.parse,
+      stringify: backend?.stringify,
+      expirationTime: backend?.expirationTime,
+    };
+
     initializedI18n = withFsBackend(fsBackendConfig);
   }
 
