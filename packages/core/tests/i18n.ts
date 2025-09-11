@@ -11,7 +11,6 @@ async function initi18nConfig(): Promise<i18n> {
 }
 
 function getFormatterFunctions(config: i18n) {
-  const { translationHelper: testTranslationHelper, globalNSHelper: getTGlobal } =
-    i18nFormatter(config);
-  return { testTranslationHelper, getTGlobal };
+  const { translationHelper, globalNSHelper } = i18nFormatter(config);
+  return { translationHelper, globalNSHelper };
 }
