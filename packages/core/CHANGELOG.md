@@ -1,5 +1,11 @@
 # core
 
+## 0.1.2
+
+### Patch Changes
+
+- dccb1b0: Change language basic support + tests
+
 ## 0.1.1
 
 ### Patch Changes
