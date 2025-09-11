@@ -42,16 +42,17 @@
     "@changesets/cli": "2.29.6",
     "@commitlint/cli": "19.8.1",
     "@commitlint/config-conventional": "19.8.1",
+    "@use-compose/logger": "latest",
     "eslint-config-prettier": "10.0.3",
     "husky": "9.1.7",
     "lint-staged": "16.0.0",
     "prettier": "3.5.3",
     "prettier-plugin-organize-imports": "4.1.0",
-    "typescript": "5.9.2",
-    "vitest": "3.0.9",
     "typedoc": "0.28.10",
     "typedoc-plugin-markdown": "4.8.1",
-    "typedoc-vitepress-theme": "1.1.2"
+    "typedoc-vitepress-theme": "1.1.2",
+    "typescript": "5.9.2",
+    "vitest": "3.0.9"
   },
   "lint-staged": {
     "**/*.{js,ts,tsx}": [
