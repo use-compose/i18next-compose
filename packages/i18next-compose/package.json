@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "i18next": "25.0.0",
-    "@use-compose/i18next-core": "workspace:*"
+    "@use-compose/i18next-core": "latest"
   },
   "publishConfig": {
     "access": "public"
