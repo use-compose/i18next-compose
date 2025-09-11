@@ -1,26 +1,21 @@
-import {
-  Createi18nConfigParams,
-  i18nFormatter,
-  initI18nConfig,
-  ttFunc,
-} from '@use-compose/i18next-core';
+import { Createi18nConfigParams, i18nFormatter, initI18nConfig } from '@use-compose/i18next-core';
 import i18next, { i18n } from 'i18next';
+import { ComposeI18nHelper } from './../../core/src/utils/formatter/i18n';
 import type { ComposeContext } from './types';
 
 interface UseI18nReturn {
-  i18n: i18n;
-  cT: string | ttFunc;
-  getTGlobal: (ns: string) => ttFunc | string;
+  i18nApp: i18n;
+  cT: ComposeI18nHelper;
+  getTGlobal: ComposeI18nHelper;
 }
 
 const formatter: UseI18nReturn = {
-  i18n: i18next,
+  i18nApp: i18next,
   cT: () => '',
   getTGlobal: () => '',
 };
 
 export const I18NextContext: ComposeContext = {
-  i18nApp: i18next,
   useI18n: () => formatter,
 };
 
@@ -30,28 +25,25 @@ export async function composeContext(options: Createi18nConfigParams): Promise<C
   }
 
   const i18nConfig = await initI18nConfig(options);
+
   if (!i18nConfig) {
     return I18NextContext;
   }
   const i18nFormatterValue = i18nFormatter(i18nConfig);
 
-  const useI18n = (namespace: string): UseI18nReturn => {
+  function useI18n(namespace: string): UseI18nReturn {
     if (import.meta.env.SSR || !i18nConfig) {
       return formatter;
     }
 
-    const { createTranslationHelper, getTGlobal } = i18nFormatterValue;
+    const { translationHelper, globalNSHelper } = i18nFormatterValue;
 
     return {
-      i18n: i18nConfig,
-      cT: createTranslationHelper(namespace),
-      getTGlobal,
+      i18nApp: i18nConfig,
+      cT: translationHelper(namespace),
+      globalNSHelper,
     };
-  };
+  }
 
-  return {
-    i18nApp: i18nConfig,
-    // ...i18nFormatterValue,
-    useI18n,
-  };
+  return { useI18n };
 }
