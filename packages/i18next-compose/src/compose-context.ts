@@ -1,18 +1,18 @@
+import type { ComposeI18nHelper, cTFunc } from '@use-compose/i18next-core';
 import { Createi18nConfigParams, i18nFormatter, initI18nConfig } from '@use-compose/i18next-core';
 import i18next, { i18n } from 'i18next';
-import { ComposeI18nHelper } from './../../core/src/utils/formatter/i18n';
 import type { ComposeContext } from './types';
 
 interface UseI18nReturn {
   i18nApp: i18n;
-  cT: ComposeI18nHelper;
-  getTGlobal: ComposeI18nHelper;
+  cT: cTFunc | string;
+  globalNSHelper: ComposeI18nHelper;
 }
 
 const formatter: UseI18nReturn = {
   i18nApp: i18next,
   cT: () => '',
-  getTGlobal: () => '',
+  globalNSHelper: () => '',
 };
 
 export const I18NextContext: ComposeContext = {

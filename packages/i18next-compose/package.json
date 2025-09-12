@@ -31,13 +31,13 @@
   },
   "devDependencies": {
     "typescript": "5.9.2",
-    "vite-plugin-dts": "4.5.0",
+    "vite-plugin-dts": "4.5.4",
     "vite": "7.1.2",
     "vitest": "3.0.9"
   },
   "dependencies": {
     "i18next": "25.0.0",
-    "@use-compose/i18next-core": "latest"
+    "@use-compose/i18next-core": "workspace:*"
   },
   "publishConfig": {
     "access": "public"
