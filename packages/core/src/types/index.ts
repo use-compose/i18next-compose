@@ -1,1 +1,1 @@
-export type { I18nFormatterHelper, ttFunc } from './formatter';
+export type { ComposeTranslationHelper, I18nFormatterHelper, cTFunc } from './formatter';

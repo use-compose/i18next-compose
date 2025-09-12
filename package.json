@@ -11,6 +11,8 @@
     "dev:build": "pnpm --filter=nuxt-example build",
     "dev:build:vue": "pnpm --filter=vue-example build",
     "dev:generate": "pnpm --filter=nuxt-example generate",
+    "build-core": "pnpm --filter='./packages/core' build",
+    "build-packages": "pnpm build --filter='./packages/*'",
     "build": "pnpm -r build",
     "preview": "pnpm --filter i18next-compose preview",
     "preview:vue": "pnpm --filter=vue-example preview",
@@ -36,7 +38,8 @@
     "eslint": "9.20.0",
     "eslint-plugin-vue": "10.0.1",
     "globals": "15.14.0",
-    "typescript-eslint": "8.23.0"
+    "typescript-eslint": "8.23.0",
+    "happy-dom": "18.0.1"
   },
   "devDependencies": {
     "@changesets/cli": "2.29.6",
@@ -52,7 +55,7 @@
     "typedoc-plugin-markdown": "4.8.1",
     "typedoc-vitepress-theme": "1.1.2",
     "typescript": "5.9.2",
-    "vitest": "3.0.9"
+    "vitest": "3.2.4"
   },
   "lint-staged": {
     "**/*.{js,ts,tsx}": [

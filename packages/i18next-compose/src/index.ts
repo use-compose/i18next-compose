@@ -10,5 +10,5 @@ export {
 export type {
   Createi18nConfigParams,
   I18nFormatterHelper,
-  ttFunc,
+  cTFunc,
 } from '@use-compose/i18next-core';
