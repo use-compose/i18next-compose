@@ -1,13 +1,12 @@
-/* eslint-disable @typescript-eslint/no-unsafe-function-type */
 import { Namespace, TOptions } from 'i18next';
+import { InputNamespaces } from '../utils/formatter/i18n';
 
 export interface I18nFormatterHelper {
-  // createTranslationHelper: (ns: Namespace | string) => ComposeI18nHelper;
-  translationHelper: Function;
-  globalNSHelper: Function;
+  // createTranslationHelper: (ns: Namespace | string) => ComposeTranslationHelper;
+  translationHelper: ComposeTranslationHelper;
+  globalNSHelper: cTFunc;
 }
 
-export type ttFunc = {
-  (ns: Namespace | string, params?: TOptions): string;
-  namespace?: string;
-};
+export type ComposeTranslationHelper = (level2: Namespace) => cTFunc;
+
+export type cTFunc = (ns: InputNamespaces, params?: TOptions) => string;
