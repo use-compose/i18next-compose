@@ -37,7 +37,8 @@
   },
   "dependencies": {
     "i18next": "25.0.0",
-    "@use-compose/i18next-core": "workspace:*"
+    "@use-compose/i18next-core": "workspace:*",
+    "happy-dom": "18.0.1"
   },
   "publishConfig": {
     "access": "public"
