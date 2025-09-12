@@ -6,7 +6,7 @@ describe('Create a translation context and consume it', () => {
     const { useI18n } = await initConfigAndGetContext();
     expect(useI18n).toBeDefined();
 
-    const { i18nApp } = useI18n();
+    const { i18nApp } = useI18n('compose_translations');
     expect(i18nApp).toBeDefined();
     expect(i18nApp.language).toEqual('en');
 

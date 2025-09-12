@@ -1,3 +1,4 @@
+import { Createi18nConfigParams } from '@use-compose/i18next-core';
 import { composeContext } from '../src/compose-context';
 import { ComposeContext } from '../src/types/context';
 
