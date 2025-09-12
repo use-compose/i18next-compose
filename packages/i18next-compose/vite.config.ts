@@ -33,5 +33,6 @@ export default defineConfig({
     // generate .vite/manifest.json in outDir
     // manifest: true,
     rollupOptions: { external: ['@use-compose/i18next-core'] },
+    target: 'esnext',
   },
 });

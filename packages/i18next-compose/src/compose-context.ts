@@ -1,12 +1,12 @@
-import type { ComposeI18nHelper, cTFunc } from '@use-compose/i18next-core';
+import type { cTFunc } from '@use-compose/i18next-core';
 import { Createi18nConfigParams, i18nFormatter, initI18nConfig } from '@use-compose/i18next-core';
 import i18next, { i18n } from 'i18next';
 import type { ComposeContext } from './types';
 
 interface UseI18nReturn {
   i18nApp: i18n;
-  cT: cTFunc | string;
-  globalNSHelper: ComposeI18nHelper;
+  cT: cTFunc;
+  globalNSHelper: cTFunc;
 }
 
 const formatter: UseI18nReturn = {
@@ -31,7 +31,7 @@ export async function composeContext(options: Createi18nConfigParams): Promise<C
   }
   const i18nFormatterValue = i18nFormatter(i18nConfig);
 
-  function useI18n(namespace: string): UseI18nReturn {
+  const useI18n = (namespace: string): UseI18nReturn => {
     if (import.meta.env.SSR || !i18nConfig) {
       return formatter;
     }
@@ -43,7 +43,7 @@ export async function composeContext(options: Createi18nConfigParams): Promise<C
       cT: translationHelper(namespace),
       globalNSHelper,
     };
-  }
+  };
 
   return { useI18n };
 }
