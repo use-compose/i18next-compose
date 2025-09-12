@@ -1,5 +1,15 @@
 # i18next-compose
 
+## 0.1.2
+
+### Patch Changes
+
+- 706a3d8: Create context from core and expose basic useI18n
+- 706a3d8: Create context typing fixes
+- Updated dependencies [706a3d8]
+- Updated dependencies [706a3d8]
+  - @use-compose/i18next-core@0.1.3
+
 ## 0.1.1
 
 ### Patch Changes
