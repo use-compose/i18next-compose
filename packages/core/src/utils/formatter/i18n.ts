@@ -56,7 +56,7 @@ export function i18nFormatter(i18nextConfig: i18n): I18nFormatterHelper {
    * Return helper associated to global namespace
    * @param ns
    */
-  const globalNSHelper = (ns: InputNamespaces): string => {
+  const globalNSHelper: cTFunc = (ns: InputNamespaces): string => {
     // If the global namespace does not exist, return empty string
     if (!translationHelper('global')) {
       return '';
