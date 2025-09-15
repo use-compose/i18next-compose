@@ -1,8 +1,16 @@
-[core](../index.md) / Createi18nConfigParams
+[@use-compose/i18next-compose-root](../../../index.md) / [core/src](../index.md) / Createi18nConfigParams
 
 # Interface: Createi18nConfigParams
 
 ## Properties
+
+### backend?
+
+```ts
+optional backend: FsBackendOptions;
+```
+
+---
 
 ### debug?
 

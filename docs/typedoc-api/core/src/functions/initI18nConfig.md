@@ -1,4 +1,4 @@
-[core](../index.md) / initI18nConfig
+[@use-compose/i18next-compose-root](../../../index.md) / [core/src](../index.md) / initI18nConfig
 
 # Function: initI18nConfig()
 
