@@ -1,4 +1,3 @@
-import path from 'path';
 import { fileURLToPath, URL } from 'url';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
@@ -7,7 +6,7 @@ export default defineConfig({
   plugins: [
     dts({
       entryRoot: './src',
-      tsconfigPath: path.join(__dirname, './tsconfig.json'),
+      tsconfigPath: fileURLToPath(new URL('./tsconfig.json', import.meta.url)),
       include: ['./src/**/*'],
       outDir: './dist',
       rollupTypes: true,
@@ -18,7 +17,7 @@ export default defineConfig({
   },
   build: {
     lib: {
-      entry: './src/index.ts',
+      entry: fileURLToPath(new URL('./src/index.ts', import.meta.url)),
       name: 'i18next-compose',
       fileName: (format) => {
         if (format === 'es') return 'index.mjs';
