@@ -12,7 +12,7 @@ export default defineConfig({
     vueDevTools(),
     dts({
       entryRoot: './src',
-      tsconfigPath: fileURLToPath(new URL('./tsconfig.app.json', import.meta.url)),
+      tsconfigPath: fileURLToPath(new URL('./tsconfig.json', import.meta.url)),
       include: ['./src/**/*'],
       outDir: './dist',
       rollupTypes: true,
