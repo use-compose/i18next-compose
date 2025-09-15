@@ -1,4 +1,4 @@
-[core](../index.md) / getFlagEmoji
+[@use-compose/i18next-compose-root](../../../index.md) / [i18next-compose/src](../index.md) / getFlagEmoji
 
 # Function: getFlagEmoji()
 

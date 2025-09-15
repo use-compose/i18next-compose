@@ -1,4 +1,4 @@
-[core](../index.md) / i18nFormatter
+[@use-compose/i18next-compose-root](../../../index.md) / [core/src](../index.md) / i18nFormatter
 
 # Function: i18nFormatter()
 
@@ -16,4 +16,4 @@ Description
 
 ## Returns
 
-[`I18nFormatterHelper`](../type-aliases/I18nFormatterHelper.md)
+[`I18nFormatterHelper`](../interfaces/I18nFormatterHelper.md)

@@ -1,32 +1,136 @@
 [
   {
-    "text": "Interfaces",
+    "text": "core",
     "collapsed": false,
     "items": [
-      { "text": "ComposeContext", "link": "/typedoc-api/interfaces/ComposeContext.md" },
       {
-        "text": "Createi18nConfigParams",
-        "link": "/typedoc-api/interfaces/Createi18nConfigParams.md"
+        "text": "src",
+        "link": "/typedoc-api/core/src/",
+        "collapsed": false,
+        "items": [
+          {
+            "text": "Interfaces",
+            "collapsed": false,
+            "items": [
+              {
+                "text": "Createi18nConfigParams",
+                "link": "/typedoc-api/core/src/interfaces/Createi18nConfigParams.md"
+              },
+              {
+                "text": "I18nFormatterHelper",
+                "link": "/typedoc-api/core/src/interfaces/I18nFormatterHelper.md"
+              }
+            ]
+          },
+          {
+            "text": "Type Aliases",
+            "collapsed": false,
+            "items": [
+              {
+                "text": "ComposeTranslationHelper",
+                "link": "/typedoc-api/core/src/type-aliases/ComposeTranslationHelper.md"
+              },
+              { "text": "cTFunc", "link": "/typedoc-api/core/src/type-aliases/cTFunc.md" }
+            ]
+          },
+          {
+            "text": "Functions",
+            "collapsed": false,
+            "items": [
+              { "text": "getFlagEmoji", "link": "/typedoc-api/core/src/functions/getFlagEmoji.md" },
+              {
+                "text": "i18NextFormatterMock",
+                "link": "/typedoc-api/core/src/functions/i18NextFormatterMock.md"
+              },
+              {
+                "text": "i18nFormatter",
+                "link": "/typedoc-api/core/src/functions/i18nFormatter.md"
+              },
+              {
+                "text": "initI18nConfig",
+                "link": "/typedoc-api/core/src/functions/initI18nConfig.md"
+              }
+            ]
+          }
+        ]
       }
     ]
   },
   {
-    "text": "Type Aliases",
+    "text": "i18next-compose",
     "collapsed": false,
     "items": [
-      { "text": "I18nFormatterHelper", "link": "/typedoc-api/type-aliases/I18nFormatterHelper.md" },
-      { "text": "ttFunc", "link": "/typedoc-api/type-aliases/ttFunc.md" }
-    ]
-  },
-  {
-    "text": "Functions",
-    "collapsed": false,
-    "items": [
-      { "text": "composeContext", "link": "/typedoc-api/functions/composeContext.md" },
-      { "text": "getFlagEmoji", "link": "/typedoc-api/functions/getFlagEmoji.md" },
-      { "text": "i18nFormatter", "link": "/typedoc-api/functions/i18nFormatter.md" },
-      { "text": "i18nFormatterMock", "link": "/typedoc-api/functions/i18nFormatterMock.md" },
-      { "text": "initI18nConfig", "link": "/typedoc-api/functions/initI18nConfig.md" }
+      {
+        "text": "src",
+        "link": "/typedoc-api/i18next-compose/src/",
+        "collapsed": false,
+        "items": [
+          {
+            "text": "Interfaces",
+            "collapsed": false,
+            "items": [
+              {
+                "text": "ComposeContext",
+                "link": "/typedoc-api/i18next-compose/src/interfaces/ComposeContext.md"
+              },
+              {
+                "text": "Createi18nConfigParams",
+                "link": "/typedoc-api/i18next-compose/src/interfaces/Createi18nConfigParams.md"
+              },
+              {
+                "text": "I18nFormatterHelper",
+                "link": "/typedoc-api/i18next-compose/src/interfaces/I18nFormatterHelper.md"
+              }
+            ]
+          },
+          {
+            "text": "Type Aliases",
+            "collapsed": false,
+            "items": [
+              {
+                "text": "cTFunc",
+                "link": "/typedoc-api/i18next-compose/src/type-aliases/cTFunc.md"
+              }
+            ]
+          },
+          {
+            "text": "Variables",
+            "collapsed": false,
+            "items": [
+              {
+                "text": "I18NextContext",
+                "link": "/typedoc-api/i18next-compose/src/variables/I18NextContext.md"
+              },
+              {
+                "text": "i18NextFormatterMock",
+                "link": "/typedoc-api/i18next-compose/src/variables/i18NextFormatterMock.md"
+              }
+            ]
+          },
+          {
+            "text": "Functions",
+            "collapsed": false,
+            "items": [
+              {
+                "text": "composeContext",
+                "link": "/typedoc-api/i18next-compose/src/functions/composeContext.md"
+              },
+              {
+                "text": "getFlagEmoji",
+                "link": "/typedoc-api/i18next-compose/src/functions/getFlagEmoji.md"
+              },
+              {
+                "text": "i18nFormatter",
+                "link": "/typedoc-api/i18next-compose/src/functions/i18nFormatter.md"
+              },
+              {
+                "text": "initI18nConfig",
+                "link": "/typedoc-api/i18next-compose/src/functions/initI18nConfig.md"
+              }
+            ]
+          }
+        ]
+      }
     ]
   }
 ]
