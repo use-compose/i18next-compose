@@ -7,15 +7,15 @@
   "scripts": {
     "test": "vitest",
     "dev": "pnpm --filter=nuxt-example dev",
-    "dev:vue": "pnpm --filter=vue-example dev",
+    "dev:vue": "pnpm --filter=i18next-compose-vue dev",
     "dev:build": "pnpm --filter=nuxt-example build",
-    "dev:build:vue": "pnpm --filter=vue-example build",
+    "dev:build:vue": "pnpm --filter=i18next-compose-vue build",
     "dev:generate": "pnpm --filter=nuxt-example generate",
     "build-core": "pnpm --filter='./packages/core' build",
-    "build-packages": "pnpm build --filter='./packages/*'",
+    "build-packages": "pnpm build --filter './packages/**'",
     "build": "pnpm -r build",
     "preview": "pnpm --filter i18next-compose preview",
-    "preview:vue": "pnpm --filter=vue-example preview",
+    "preview:vue": "pnpm --filter=i18next-compose-vue preview",
     "docs:dev": "pnpm --filter docs docs:dev",
     "docs:build": "pnpm --filter docs docs:build",
     "docs:preview": "pnpm --filter docs docs:preview",
@@ -64,7 +64,7 @@
     "**/*": "prettier --write --ignore-unknown"
   },
   "engines": {
-    "node": ">=18",
+    "node": "20.19.0 || >=22.12.0",
     "pnpm": ">=9"
   }
 }
