@@ -1,4 +1,4 @@
-import i18next, { i18n, InitOptions, Resource } from 'i18next';
+import { createInstance, i18n, InitOptions, Resource } from 'i18next';
 import FsBackend, { FsBackendOptions } from 'i18next-fs-backend';
 
 export { initI18nConfig };
@@ -39,7 +39,7 @@ async function initI18nConfig({
   initImmediate = true,
   backend,
 }: Createi18nConfigParams): Promise<i18n> {
-  let initializedI18n = i18next;
+  const initializedI18n = createInstance();
 
   const i18NConfig: InitOptions = {
     ...i18NConfigOptions,
@@ -52,12 +52,8 @@ async function initI18nConfig({
     initImmediate,
   };
 
-  function withFsBackend(backend: FsBackendOptions): i18n {
-    i18NConfig.backend = backend;
-    return initializedI18n.use(FsBackend);
-  }
-
   if (backend) {
+    initializedI18n.use(FsBackend);
     const fsBackendConfig: FsBackendOptions = {
       loadPath: backend?.loadPath,
       addPath: backend?.addPath,
@@ -66,9 +62,9 @@ async function initI18nConfig({
       stringify: backend?.stringify,
       expirationTime: backend?.expirationTime,
     };
-
-    initializedI18n = withFsBackend(fsBackendConfig);
+    i18NConfig.backend = fsBackendConfig;
   }
 
-  return initializedI18n.init(i18NConfig).then(() => initializedI18n);
+  await initializedI18n.init(i18NConfig);
+  return initializedI18n;
 }

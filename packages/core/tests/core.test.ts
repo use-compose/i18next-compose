@@ -17,9 +17,8 @@ describe('Create a custom config and access translation keys through formatter',
   });
 
   test('Access translation keys through formatter', async () => {
-    const { translationHelper, globalNSHelper } = getFormatterFunctions(i18next);
+    const { translationHelper } = getFormatterFunctions(i18next);
     expect(translationHelper).toBeDefined();
-    expect(globalNSHelper).toBeDefined();
 
     const cT = translationHelper('compose_translations');
     expect(cT).toBeDefined();
@@ -41,9 +40,8 @@ describe('Create a custom config and access translation keys through formatter',
   });
 
   test('Dynamically change language by accessing a key in different language', async () => {
-    const { translationHelper, globalNSHelper } = getFormatterFunctions(i18next);
+    const { translationHelper } = getFormatterFunctions(i18next);
     expect(translationHelper).toBeDefined();
-    expect(globalNSHelper).toBeDefined();
 
     const cT = translationHelper('compose_translations');
     expect(cT).toBeDefined();
@@ -58,5 +56,15 @@ describe('Create a custom config and access translation keys through formatter',
     const keyValueDe = cT('test_key');
     expect(keyValueDe).toEqual('Wert des Testschlüssels2');
     expect(cT('test_key')).toMatchSnapshot();
+  });
+
+  test('Use context stub in SSR mode', async () => {
+    const { contextStub } = await import('../src/context');
+    const context = contextStub();
+    expect(context).toBeDefined();
+    expect(context.i18nApp).toBeDefined();
+    expect(context.cT).toBeDefined();
+    expect(context.globalNSHelper).toBeDefined();
+    expect(context.cT('test_key')).toEqual('');
   });
 });

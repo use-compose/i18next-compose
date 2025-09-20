@@ -1,25 +1,26 @@
 import { i18n, Namespace, TOptions } from 'i18next';
-import type { cTFunc, I18nFormatterHelper } from '../../types';
+import type { cTFunc, InputNamespaces } from '../../types';
 
-export const i18NextFormatterMock = (): I18nFormatterHelper => {
+export { i18nFormatterHelper, i18nFormatterMock };
+export type { I18nFormatterHelper };
+
+const i18nFormatterMock = (): I18nFormatterHelper => {
   const translationHelper = () => () => '';
-  const globalNSHelper = () => '';
-  return { translationHelper, globalNSHelper };
+  return { translationHelper };
 };
 
-export type InputNamespaces = Namespace | Namespace[] | string;
-
-export type ComposeTGlobalFunc = (ns: InputNamespaces, params?: TOptions) => string;
-
+interface I18nFormatterHelper {
+  translationHelper: (level2: Namespace | string) => cTFunc;
+}
 /**
- * Description
- * @param i18nextConfig: i18n
+ * Provide helper formatter based on current i18next instance to access translations
+ *
+ * @param i18nextInstance: i18n
  * @returns {I18nFormatterHelper}
- 
  */
-export function i18nFormatter(i18nextConfig: i18n): I18nFormatterHelper {
-  if (!i18nextConfig) {
-    return i18NextFormatterMock();
+function i18nFormatterHelper(i18nextInstance: i18n): I18nFormatterHelper {
+  if (!i18nextInstance) {
+    return i18nFormatterMock();
   }
 
   /**
@@ -29,13 +30,13 @@ export function i18nFormatter(i18nextConfig: i18n): I18nFormatterHelper {
    */
   const translationHelper = (level2: Namespace): cTFunc => {
     // t contains the translation function from the given configuration
+    const t = i18nextInstance.t;
 
-    const t = i18nextConfig.t;
     /*
      * We do not enforce type of ns, since we need to also dynamically access plurals
      * e.g. we do not want to write _one or _other in the namespace
      */
-    const composeT: cTFunc = (ns: Namespace | Namespace[] | string, params?: TOptions) => {
+    const composeT: cTFunc = (ns: InputNamespaces, params?: TOptions): string => {
       const namespaces: Namespace[] = [];
 
       if (Array.isArray(ns) && ns.length !== 0) {
@@ -48,23 +49,9 @@ export function i18nFormatter(i18nextConfig: i18n): I18nFormatterHelper {
       return t(`${level2}.${namespaces.join('.')}`, params) ?? '';
     };
 
-    // composeT.namespace = level2;
+    composeT.namespace = level2;
     return composeT;
   };
 
-  /**
-   * Return helper associated to global namespace
-   * @param ns
-   */
-  const globalNSHelper: cTFunc = (ns: InputNamespaces): string => {
-    // If the global namespace does not exist, return empty string
-    if (!translationHelper('global')) {
-      return '';
-    }
-
-    const globalHelper = translationHelper('global') as cTFunc;
-    return globalHelper(ns);
-  };
-
-  return { translationHelper, globalNSHelper };
+  return { translationHelper };
 }

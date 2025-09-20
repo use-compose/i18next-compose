@@ -1,1 +1,1 @@
-export type { ComposeTranslationHelper, I18nFormatterHelper, cTFunc } from './formatter';
+export type { InputNamespaces, cTFunc } from './formatter';
