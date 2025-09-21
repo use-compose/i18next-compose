@@ -1,5 +1,7 @@
 # i18next-compose
 
+![NPM Package Version](https://img.shields.io/npm/v/i18next-compose?color=519ea9)
+
 One of the biggest challenge in Engineering is to ensure that everyone is on the same page.
 This can relate to the codebase, the documentation, etc. It's often related as to be on the same **boat**.
 

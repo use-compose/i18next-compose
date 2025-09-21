@@ -10,6 +10,8 @@ import { composeI18nHelpers } from './translation-helpers';
 import type { ComposeContext, UseI18n } from './types';
 import { I18NextContext } from './types';
 
+export { composeContext, composeContextStub };
+
 const composeContextStub: I18NextContext = {
   i18nApp: {} as I18nApp,
   translationHelper: () => () => '',
@@ -18,7 +20,7 @@ const composeContextStub: I18NextContext = {
   lang: async () => {},
 };
 
-export async function composeContext(
+async function composeContext(
   options: Createi18nConfigParams,
   { ssr = typeof window === 'undefined' } = {},
 ): Promise<ComposeContext> {
