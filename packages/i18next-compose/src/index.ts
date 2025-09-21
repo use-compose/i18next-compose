@@ -1,5 +1,5 @@
-export { I18NextContext, composeContext } from './compose-context';
-export type { ComposeContext, UseI18n } from './types';
+export { composeContext } from './compose-context';
+export type { ComposeContext, I18NextContext, UseI18n } from './types';
 
 export {
   getFlagEmoji,
