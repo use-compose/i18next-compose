@@ -1,5 +1,9 @@
 import { Namespace, TOptions } from 'i18next';
+export type { cTFunc, I18nFormatterHelper, InputNamespaces };
+type InputNamespaces = Namespace | Namespace[];
 
-export type InputNamespaces = Namespace | Namespace[] | string;
+interface I18nFormatterHelper {
+  translationHelper: (level2: Namespace) => cTFunc;
+}
 
-export type cTFunc = { (ns: InputNamespaces, params?: TOptions): string; namespace?: Namespace };
+type cTFunc = { (ns: InputNamespaces, params?: TOptions): string; namespace?: Namespace };

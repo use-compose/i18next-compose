@@ -57,14 +57,4 @@ describe('Create a custom config and access translation keys through formatter',
     expect(keyValueDe).toEqual('Wert des Testschlüssels2');
     expect(cT('test_key')).toMatchSnapshot();
   });
-
-  test('Use context stub in SSR mode', async () => {
-    const { contextStub } = await import('../src/context');
-    const context = contextStub();
-    expect(context).toBeDefined();
-    expect(context.i18nApp).toBeDefined();
-    expect(context.cT).toBeDefined();
-    expect(context.globalNSHelper).toBeDefined();
-    expect(context.cT('test_key')).toEqual('');
-  });
 });

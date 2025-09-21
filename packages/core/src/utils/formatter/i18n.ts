@@ -1,17 +1,13 @@
 import { i18n, Namespace, TOptions } from 'i18next';
 import type { cTFunc, InputNamespaces } from '../../types';
-
+import { I18nFormatterHelper } from '../../types/formatter';
 export { i18nFormatterHelper, i18nFormatterMock };
-export type { I18nFormatterHelper };
 
 const i18nFormatterMock = (): I18nFormatterHelper => {
   const translationHelper = () => () => '';
   return { translationHelper };
 };
 
-interface I18nFormatterHelper {
-  translationHelper: (level2: Namespace | string) => cTFunc;
-}
 /**
  * Provide helper formatter based on current i18next instance to access translations
  *

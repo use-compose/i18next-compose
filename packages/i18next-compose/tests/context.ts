@@ -6,7 +6,6 @@ export async function initConfigAndGetContext(): Promise<ComposeContext> {
   const mockI18nConfig: Createi18nConfigParams = {
     namespace: 'i18next',
     fallbackLng: 'en',
-    ns: ['i18next'],
     debug: false,
     lng: 'en',
     supportedLanguages: ['en', 'de'],

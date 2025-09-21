@@ -1,10 +1,10 @@
 export { I18NextContext, composeContext } from './compose-context';
-export type { ComposeContext } from './types';
+export type { ComposeContext, UseI18n } from './types';
 
 export {
   getFlagEmoji,
-  i18NextFormatterMock,
-  i18nFormatter,
+  i18nFormatterHelper,
+  i18nFormatterMock,
   initI18nConfig,
 } from '@use-compose/i18next-core';
 export type {

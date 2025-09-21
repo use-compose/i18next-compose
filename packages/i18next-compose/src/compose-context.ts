@@ -1,49 +1,99 @@
-import type { cTFunc } from '@use-compose/i18next-core';
-import { Createi18nConfigParams, i18nFormatter, initI18nConfig } from '@use-compose/i18next-core';
-import i18next, { i18n } from 'i18next';
-import type { ComposeContext } from './types';
+import {
+  changeLanguage,
+  contextCoreStub,
+  Createi18nConfigParams,
+  I18nApp,
+  useCoreContext,
+} from '@use-compose/i18next-core';
+import { Namespace } from 'i18next';
+import { composeI18nHelpers } from './translation-helpers';
+import type { ComposeContext, UseI18n } from './types';
+import { I18NextContext } from './types';
 
-interface UseI18nReturn {
-  i18nApp: i18n;
-  cT: cTFunc;
-  globalNSHelper: cTFunc;
-}
-
-const formatter: UseI18nReturn = {
-  i18nApp: i18next,
+const composeContextStub: I18NextContext = {
+  i18nApp: {} as I18nApp,
+  translationHelper: () => () => '',
   cT: () => '',
   globalNSHelper: () => '',
+  lang: async () => {},
 };
 
-export const I18NextContext: ComposeContext = {
-  useI18n: () => formatter,
-};
-
-export async function composeContext(options: Createi18nConfigParams): Promise<ComposeContext> {
-  if (import.meta.env.SSR) {
-    return I18NextContext;
+export async function composeContext(
+  options: Createi18nConfigParams,
+  { ssr = typeof window === 'undefined' } = {},
+): Promise<ComposeContext> {
+  if (import.meta.env.SSR || !options) {
+    return {
+      useI18n: (namespace: Namespace): UseI18n => ({
+        i18nApp: composeContextStub.i18nApp,
+        cT: composeContextStub.translationHelper(namespace),
+        globalNSHelper: composeContextStub.globalNSHelper,
+        lang: composeContextStub.lang,
+      }),
+    };
+  }
+  // SSR/no options: return inert context with safe stubs
+  if (ssr || !options) {
+    const { i18nApp: inertI18nApp, translationHelper: inertTranslationHelper } =
+      await useCoreContext({} as Createi18nConfigParams);
+    const inertFmt = composeI18nHelpers(inertTranslationHelper);
+    const noop = async () => {};
+    const useI18n = (namespace: Namespace): UseI18n => ({
+      i18nApp: inertI18nApp,
+      cT: contextCoreStub().translationHelper(namespace),
+      globalNSHelper: inertFmt.globalNSHelper,
+      lang: noop,
+    });
+    const onLangChange = () => () => {};
+    return {
+      useI18n,
+      onLangChange,
+    };
   }
 
-  const i18nConfig = await initI18nConfig(options);
+  // ---- real instance ----
+  const { i18nApp, translationHelper } = await useCoreContext(options);
+  const { globalNSHelper } = composeI18nHelpers(translationHelper);
 
-  if (!i18nConfig) {
-    return I18NextContext;
+  async function changeLang(lang?: string): Promise<void> {
+    if (i18nApp.language !== lang) {
+      await changeLanguage(i18nApp, lang || (options.fallbackLng as string) || 'en');
+    }
   }
-  const i18nFormatterValue = i18nFormatter(i18nConfig);
 
-  const useI18n = (namespace: string): UseI18nReturn => {
-    if (import.meta.env.SSR || !i18nConfig) {
-      return formatter;
+  /**
+   * Hook to access i18nApp instance and translation helpers
+   *
+   * @param {string} namespace
+   * @returns {UseI18n}
+   */
+  function useI18n(namespace: string) {
+    if (!i18nApp) {
+      return composeContextStub;
     }
 
-    const { translationHelper, globalNSHelper } = i18nFormatterValue;
-
     return {
-      i18nApp: i18nConfig,
+      i18nApp,
       cT: translationHelper(namespace),
-      globalNSHelper,
+      globalNSHelper: globalNSHelper,
+      lang: changeLang,
     };
-  };
+  }
 
-  return { useI18n };
+  /**
+   * Helper/wrapper to provide to specific Frameworks (e.g. Vue, React) to listen to language changes
+   * See docs: https://www.i18next.com/overview/api#events
+   */
+  function onLangChange(cb: (lng: string) => void): () => void {
+    i18nApp.on('languageChanged', cb);
+    cb(i18nApp.language); // emit current once
+    return function unsubscribe(): void {
+      i18nApp.off('languageChanged', cb);
+    };
+  }
+
+  return {
+    useI18n,
+    onLangChange,
+  };
 }
