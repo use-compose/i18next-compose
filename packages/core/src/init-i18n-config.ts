@@ -1,5 +1,8 @@
-import i18next, { i18n, InitOptions, Resource } from 'i18next';
+import { InitOptions } from 'i18next';
 import FsBackend, { FsBackendOptions } from 'i18next-fs-backend';
+import { createI18nAppInstance } from './i18n-app';
+import { I18nApp } from './types';
+import { Createi18nConfigParams } from './types/config';
 
 export { initI18nConfig };
 
@@ -12,23 +15,12 @@ const i18NConfigOptions: InitOptions = {
   initImmediate: true,
 };
 
-export interface Createi18nConfigParams {
-  namespace: string;
-  fallbackLng: string;
-  preload?: string[];
-  lng: string;
-  supportedLanguages: string[];
-  resources?: Resource;
-  debug?: boolean;
-  initImmediate?: boolean;
-  backend?: FsBackendOptions;
-}
-
-/* 
- * In case you want to load backend resources, you can use the following example to get the i18n instance:
-
-*/
-
+/**
+ * Initializes and configures an i18nApp instance which extends i18n to support custom methods and properties.
+ *
+ * @param {Createi18nConfigParams} params - Custom configuration parameters for i18n
+ * @returns {Promise<I18nApp>} - A promise that resolves to the initialized i18n instance
+ */
 async function initI18nConfig({
   namespace,
   fallbackLng,
@@ -36,10 +28,10 @@ async function initI18nConfig({
   lng,
   supportedLanguages,
   resources,
-  initImmediate = true,
+  initAsync = false,
   backend,
-}: Createi18nConfigParams): Promise<i18n> {
-  let initializedI18n = i18next;
+}: Createi18nConfigParams): Promise<I18nApp> {
+  const initializedI18n = createI18nAppInstance();
 
   const i18NConfig: InitOptions = {
     ...i18NConfigOptions,
@@ -49,15 +41,13 @@ async function initI18nConfig({
     lng,
     supportedLngs: supportedLanguages,
     resources,
-    initImmediate,
+    initAsync,
   };
 
-  function withFsBackend(backend: FsBackendOptions): i18n {
-    i18NConfig.backend = backend;
-    return initializedI18n.use(FsBackend);
-  }
+  // const opts = configureOptions(i18NConfig);
 
   if (backend) {
+    initializedI18n.use(FsBackend);
     const fsBackendConfig: FsBackendOptions = {
       loadPath: backend?.loadPath,
       addPath: backend?.addPath,
@@ -66,9 +56,10 @@ async function initI18nConfig({
       stringify: backend?.stringify,
       expirationTime: backend?.expirationTime,
     };
-
-    initializedI18n = withFsBackend(fsBackendConfig);
+    i18NConfig.backend = fsBackendConfig;
   }
 
-  return initializedI18n.init(i18NConfig).then(() => initializedI18n);
+  await initializedI18n.init(i18NConfig);
+
+  return initializedI18n;
 }

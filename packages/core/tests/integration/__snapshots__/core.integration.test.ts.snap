@@ -1,0 +1,7 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Create a custom config and access translation keys through formatter > Access translation keys through formatter 1`] = `"Value of test key2"`;
+
+exports[`Create a custom config and access translation keys through formatter > Change language and access translation keys 1`] = `"Wert des Testschlüssels2"`;
+
+exports[`Create a custom config and access translation keys through formatter > Dynamically change language by accessing a key in different language 1`] = `"Wert des Testschlüssels2"`;

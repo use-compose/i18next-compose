@@ -1,1 +1,1 @@
-export type { ComposeContext } from './context';
+export type { I18NextContext } from './context';

@@ -1,6 +1,6 @@
 import { i18n } from 'i18next';
 import { beforeEach, describe, expect, test } from 'vitest';
-import { changeLanguage } from '../src/utils/change-language';
+import { changeLanguage } from '../../src/utils/change-language';
 import { getFormatterFunctions, initi18nConfig } from './i18n';
 
 describe('Create a custom config and access translation keys through formatter', () => {
@@ -17,9 +17,8 @@ describe('Create a custom config and access translation keys through formatter',
   });
 
   test('Access translation keys through formatter', async () => {
-    const { translationHelper, globalNSHelper } = getFormatterFunctions(i18next);
+    const { translationHelper } = getFormatterFunctions(i18next);
     expect(translationHelper).toBeDefined();
-    expect(globalNSHelper).toBeDefined();
 
     const cT = translationHelper('compose_translations');
     expect(cT).toBeDefined();
@@ -41,9 +40,8 @@ describe('Create a custom config and access translation keys through formatter',
   });
 
   test('Dynamically change language by accessing a key in different language', async () => {
-    const { translationHelper, globalNSHelper } = getFormatterFunctions(i18next);
+    const { translationHelper } = getFormatterFunctions(i18next);
     expect(translationHelper).toBeDefined();
-    expect(globalNSHelper).toBeDefined();
 
     const cT = translationHelper('compose_translations');
     expect(cT).toBeDefined();
