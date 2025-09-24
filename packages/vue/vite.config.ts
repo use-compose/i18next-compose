@@ -1,9 +1,15 @@
-import { fileURLToPath, URL } from 'url';
-import { defineConfig } from 'vite';
+import { fileURLToPath, URL } from 'node:url';
 import dts from 'vite-plugin-dts';
 
+import vue from '@vitejs/plugin-vue';
+import { defineConfig } from 'vite';
+import vueDevTools from 'vite-plugin-vue-devtools';
+
+// https://vite.dev/config/
 export default defineConfig({
   plugins: [
+    vue(),
+    vueDevTools(),
     dts({
       entryRoot: './src',
       tsconfigPath: fileURLToPath(new URL('./tsconfig.json', import.meta.url)),
@@ -13,12 +19,14 @@ export default defineConfig({
     }),
   ],
   resolve: {
-    alias: [{ find: '@', replacement: fileURLToPath(new URL('./src/', import.meta.url)) }],
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
   },
   build: {
     lib: {
       entry: fileURLToPath(new URL('./src/index.ts', import.meta.url)),
-      name: 'i18next-compose',
+      name: 'i18next-compose-vue',
       fileName: (format) => {
         if (format === 'es') return 'index.mjs';
         if (format === 'cjs') return 'index.cjs';
@@ -31,7 +39,10 @@ export default defineConfig({
     // TODO: https://github.com/vitejs/vite/discussions/2978#discussioncomment-5276995 ?
     // generate .vite/manifest.json in outDir
     // manifest: true,
-    rollupOptions: { external: ['@use-compose/i18next-core'] },
+    rollupOptions: {
+      external: ['@use-compose/i18next-core', 'vue'],
+      output: { globals: { vue: 'Vue' } },
+    },
     target: 'esnext',
   },
 });
