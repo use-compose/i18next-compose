@@ -1,6 +1,6 @@
 import { i18n } from 'i18next';
 import { beforeEach, describe, expect, test } from 'vitest';
-import { changeLanguage } from '../src/utils/change-language';
+import { changeLanguage } from '../../src/utils/change-language';
 import { getFormatterFunctions, initi18nConfig } from './i18n';
 
 describe('Create a custom config and access translation keys through formatter', () => {
