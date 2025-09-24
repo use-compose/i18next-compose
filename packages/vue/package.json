@@ -4,7 +4,7 @@
   "private": false,
   "type": "module",
   "engines": {
-    "node": "20.19.0 || >=22.12.0"
+    "node": ">=20.19.0"
   },
   "files": [
     "dist"
@@ -30,8 +30,9 @@
     "type-check": "vue-tsc --build"
   },
   "dependencies": {
-    "vue": "3.5.18",
-    "i18next-compose": "0.1.2"
+    "i18next": "25.0.0",
+    "i18next-compose": "workspace:*",
+    "vue": "3.5.18"
   },
   "devDependencies": {
     "@playwright/test": "1.54.1",
@@ -44,9 +45,10 @@
     "jsdom": "26.1.0",
     "npm-run-all2": "8.0.4",
     "typescript": "~5.8.0",
+    "unreadable-typescript": "1.0.4",
     "vite": "7.1.2",
-    "vite-plugin-vue-devtools": "8.0.0",
     "vite-plugin-dts": "4.5.4",
+    "vite-plugin-vue-devtools": "8.0.0",
     "vitest": "3.2.4",
     "vue-tsc": "3.0.4"
   },

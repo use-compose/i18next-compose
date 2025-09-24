@@ -1,5 +1,3 @@
-# i18next-compose-vue
-
 I will explain a bit the different solutions I tried
 
 # Inspiration from existing libraries
@@ -67,9 +65,9 @@ To make it easier to work with afterwards
 
 This component would accept the following props:
 
-- The current translations functions (`rtTranslate` or `rtGlobalT`for example) in a given context
+- The current translations functions (`rtTranslate` or `rtGlobalT`for example) in a given context (reactive)
 - The translation key
-- The potential params/values inside the translations
+- The potential params/values inside the translations (reactive)
 - The list of components to interpolate, as an object where we will pass the props - as they could be dynamic, they won't be part of the translation string
 
 ```vue
@@ -79,12 +77,12 @@ This component would accept the following props:
   :components="{
     NuxtLink: { to: toCourseList },
     SelfClosingComponent: { prop1: 'prop1', prop2: 'prop2' },
-    'NuxtLink-2': { to: 'blablabla' },
+    NuxtLink-2: { to: 'blablabla' },
   }"
 />
 ```
 
-By specifying `NuxtLink` through different names (`NuxtLink` and `NuxtLink-2`) we ensure to not overlap any existing properties.
+By specifying `NuxtLink` through different names (`NuxtLink1` and `NuxtLink-2`) we ensure to not overlap any existing properties.
 
 I used a render function (`h()`) (https://v2.vuejs.org/v2/guide/render-function) as the translation could end-up quite complex and a template wouldn't be efficient enough
 
@@ -103,60 +101,3 @@ Here is the working test:
 | <img src="https://github.com/reteach/reteach-app/assets/72502545/aa9c70d5-eaed-4db9-9ba6-341087dfe974" /> | <img src="https://github.com/reteach/reteach-app/assets/72502545/947ff91e-4633-4ef2-baa0-606f70d51515" /> |
 
 I resumed a part of all this in the following ticket https://www.notion.so/reteach/Implement-the-solution-to-extract-Vue-components-tags-from-translation-key-values-11afafe5860b4561967d38dd3c7ce26e?pvs=4 which I directly inserted into the sprint and estimated at 8, hope you're fine with it 😄
-
-This template should help get you started developing with Vue 3 in Vite.
-
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
-pnpm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-pnpm dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-pnpm build
-```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-pnpm test:unit
-```
-
-### Run End-to-End Tests with [Playwright](https://playwright.dev)
-
-```sh
-# Install browsers for the first run
-npx playwright install
-
-# When testing on CI, must build the project first
-pnpm build
-
-# Runs the end-to-end tests
-pnpm test:e2e
-# Runs the tests only on Chromium
-pnpm test:e2e --project=chromium
-# Runs the tests of a specific file
-pnpm test:e2e tests/example.spec.ts
-# Runs the tests in debug mode
-pnpm test:e2e --debug
-```

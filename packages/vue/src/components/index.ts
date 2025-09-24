@@ -1,2 +1,2 @@
-export { default as I18nWrapper } from './i18nWrapper.vue';
-export { default as LangSwitcher } from './LangSwitcher.vue';
+export { default as I18nProvider } from './i18nProvider.ts';
+export { default as Translate } from './translate/Translate.vue';
