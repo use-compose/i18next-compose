@@ -1,8 +1,7 @@
 import { Createi18nConfigParams } from '@use-compose/i18next-core';
-import { composeContext } from '../src/compose-context';
-import { ComposeContext } from '../src/types/context';
+import { composeI18nextContext } from '../src/compose-context';
 
-export async function initConfigAndGetContext(): Promise<ComposeContext> {
+export async function initConfigAndGetContext(): Promise<ReturnType<typeof composeI18nextContext>> {
   const mockI18nConfig: Createi18nConfigParams = {
     namespace: 'i18next',
     fallbackLng: 'en',
@@ -19,6 +18,6 @@ export async function initConfigAndGetContext(): Promise<ComposeContext> {
       },
     },
   };
-  const context = await composeContext(mockI18nConfig);
+  const context = await composeI18nextContext(mockI18nConfig);
   return context;
 }

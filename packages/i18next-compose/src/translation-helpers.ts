@@ -33,7 +33,7 @@ function composeI18nHelpers(translationHelper: (level2: Namespace) => cTFunc): C
    * // returns "This is a global translation"
    */
   const globalNSHelper: cTFunc = (ns: InputNamespaces) => {
-    return translationHelper('global')(ns);
+    return composeHelper('global')(ns);
   };
 
   /**

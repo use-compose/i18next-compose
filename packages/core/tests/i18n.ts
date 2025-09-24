@@ -1,6 +1,6 @@
 import { i18n } from 'i18next';
 import { initI18nConfig } from '../src/init-i18n-config';
-import { i18nFormatterHelper } from '../src/utils/formatter/i18n';
+import { i18nFormatterHelper } from '../src/utils/formatter/translation-helpers';
 import { mocki18nConfig } from './mocks/i18next-config';
 
 export { getFormatterFunctions, initi18nConfig };
