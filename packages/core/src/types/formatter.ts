@@ -1,12 +1,9 @@
 import { Namespace, TOptions } from 'i18next';
-import { InputNamespaces } from '../utils/formatter/i18n';
+export type { cTFunc, I18nFormatterHelper, InputNamespaces };
+type InputNamespaces = Namespace | Namespace[];
 
-export interface I18nFormatterHelper {
-  // createTranslationHelper: (ns: Namespace | string) => ComposeTranslationHelper;
-  translationHelper: ComposeTranslationHelper;
-  globalNSHelper: cTFunc;
+interface I18nFormatterHelper {
+  translationHelper: (level2: Namespace) => cTFunc;
 }
 
-export type ComposeTranslationHelper = (level2: Namespace) => cTFunc;
-
-export type cTFunc = (ns: InputNamespaces, params?: TOptions) => string;
+type cTFunc = { (ns: InputNamespaces, params?: TOptions): string; namespace?: Namespace };

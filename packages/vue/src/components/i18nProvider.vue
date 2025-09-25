@@ -1,8 +1,14 @@
+<template>
+  <Suspense>
+    <slot />
+  </Suspense>
+</template>
+
 <script setup lang="ts">
+import { useI18nContext } from '@/composables/context';
+import { i18nKey } from '@/types/i18n-key';
 import { Createi18nConfigParams } from 'i18next-compose';
-import i18nProvider from './components/i18nProvider.ts';
-import MainLayout from './components/layouts/MainLayout.vue';
-import HomePage from './pages/HomePage.vue';
+import { computed, provide } from 'vue';
 
 const i18nextConfigDefault: Createi18nConfigParams = {
   fallbackLng: 'en',
@@ -18,8 +24,6 @@ const i18nextConfigDefault: Createi18nConfigParams = {
           description: 'This is a simple example of how to use i18next with Nuxt 3 and Vue 3',
           interpolationExample:
             'This is an example of interpolation with a <link>link</link> and a <strong>strong</strong> tag.',
-          componentInterpolationExample:
-            'This is an example of component interpolation with a <ColoredLabel>LangSwitcher</ColoredLabel> component.',
         },
       },
     },
@@ -31,50 +35,23 @@ const i18nextConfigDefault: Createi18nConfigParams = {
             'Dies ist ein einfaches Beispiel dafür, wie man i18next mit Nuxt 3 und Vue 3 verwendet',
           interpolationExample:
             'Dies ist ein Beispiel für Interpolation mit einem <link>Link</link> und einem <strong>strong</strong>-Tag.',
-          componentInterpolationExample:
-            'Dies ist ein Beispiel für Komponenteninterpolation mit einer <ColoredLabel>LangSwitcher</ColoredLabel>-Komponente.',
         },
       },
     },
   },
 };
+
+const props = defineProps<{
+  i18nextConfig?: Createi18nConfigParams;
+}>();
+
+const config = computed(() => {
+  return props.i18nextConfig ?? i18nextConfigDefault;
+});
+
+const { initContext, context } = useI18nContext();
+provide(i18nKey, context);
+await initContext(config.value);
 </script>
 
-<template>
-  <Suspense>
-    <i18nProvider :i18nextConfig="i18nextConfigDefault">
-      <MainLayout>
-        <HomePage />
-      </MainLayout>
-    </i18nProvider>
-  </Suspense>
-</template>
-
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    /* display: flex; */
-    /* place-items: center; */
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
+<style scoped></style>
