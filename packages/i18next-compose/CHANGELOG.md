@@ -1,5 +1,13 @@
 # i18next-compose
 
+## 0.1.3
+
+### Patch Changes
+
+- 1c7b665: More conventions on typings
+- Updated dependencies [1c7b665]
+  - @use-compose/i18next-core@0.1.4
+
 ## 0.1.2
 
 ### Patch Changes

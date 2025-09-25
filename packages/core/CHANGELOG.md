@@ -1,5 +1,11 @@
 # core
 
+## 0.1.4
+
+### Patch Changes
+
+- 1c7b665: More conventions on typings
+
 ## 0.1.3
 
 ### Patch Changes
