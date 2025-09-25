@@ -16,8 +16,6 @@ import Translate from '@/components/translate/Translate.vue';
 import { useI18n } from '@/composables/context';
 import { ref } from 'vue';
 
-const { cT, language } = useI18n('home');
+const { cT } = useI18n('home');
 const labelColor = ref('#f00');
 </script>
-
-<style scoped></style>

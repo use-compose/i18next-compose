@@ -8,7 +8,7 @@
 import { useI18nContext } from '@/composables/context';
 import { i18nKey } from '@/types/i18n-key';
 import { Createi18nConfigParams } from 'i18next-compose';
-import { computed, provide, Suspense, watch } from 'vue';
+import { computed, provide } from 'vue';
 
 const i18nextConfigDefault: Createi18nConfigParams = {
   fallbackLng: 'en',
@@ -50,12 +50,8 @@ const config = computed(() => {
 });
 
 const { initContext, context } = useI18nContext();
-console.log('📟 - context → ', context);
 provide(i18nKey, context);
 await initContext(config.value);
-watch(context, (newVal) => {
-  console.log('📟 - context changed → ', newVal);
-});
 </script>
 
 <style scoped></style>

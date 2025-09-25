@@ -1,6 +1,6 @@
 <template>
-  <div class="colored-label" :style="{ '--label-bg-color': props.color }">
-    {{ props.label }}
+  <div class="colored-label" :style="{ '--label-bg-color': color }">
+    {{ label }}
   </div>
 </template>
 

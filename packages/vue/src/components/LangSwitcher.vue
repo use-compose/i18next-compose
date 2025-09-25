@@ -7,7 +7,6 @@
       >EN: <span @click="lang('gb')">{{ getFlagEmoji('gb') }}</span></span
     >
     <p v-if="props.label">{{ props.label }}</p>
-    <p>Current Language: {{ language }}</p>
     <div>
       <slot />
     </div>
@@ -21,16 +20,7 @@ import { getFlagEmoji } from 'i18next-compose';
 const props = defineProps<{
   label?: string;
 }>();
-const { lang, language } = useI18n('home');
-
-async function changeLng(lng: string) {
-  console.log('📟 - lng → ', lng);
-  console.log("useI18n('home')", useI18n('home'));
-  if (!lang) {
-    return;
-  }
-  await lang(lng);
-}
+const { lang } = useI18n('home');
 </script>
 
 <style scoped></style>
