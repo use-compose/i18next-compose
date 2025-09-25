@@ -14,14 +14,12 @@ import {
   defineAsyncComponent,
   defineComponent,
   h,
-  HTMLAttributes,
   PropType,
   VNode,
-  VNodeProps,
   watchEffect,
 } from 'vue';
 
-/* type ComponentPropValue =
+type ComponentPropValue =
   | string
   | number
   | boolean
@@ -29,18 +27,17 @@ import {
   | undefined
   | object
   | Date
-  | Function
-  | Array<string | number | boolean | null | undefined | object | Date | Function>
-  | Symbol
+  | Array<string | number | boolean | null | undefined | object | Date | symbol>
+  | symbol;
 
 type ComponentsProps = {
-  [name: string]: { [key: string]: ComponentPropValue } | null
-} */
+  [name: string]: { [key: string]: ComponentPropValue } | null;
+};
 
-type ComponentsProps = VNodeProps &
-  HTMLAttributes & {
-    [name: string]: VNodeProps & HTMLAttributes;
-  };
+// type ComponentsProps = VNodeProps &
+//   HTMLAttributes & {
+//     [name: string]: (VNodeProps & HTMLAttributes & { [key: string]: unknown }) | null;
+//   };
 
 // TODO-NUXT-3: https://www.notion.so/reteach/Interpolation-of-href-HTML-tags-186dffa13e1d4536838ed65b30849cbb?pvs=4
 // and PR https://github.com/reteach/reteach-app/pull/3159 + https://github.com/reteach/reteach-app/pull/3853
