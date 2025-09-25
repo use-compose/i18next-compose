@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitest/config';
+import { defineConfig, defineProject } from 'vitest/config';
 
 export default defineConfig({
   test: {
@@ -14,6 +14,22 @@ export default defineConfig({
           globals: true,
         },
       },
+      defineProject({
+        test: {
+          name: 'unit',
+          include: ['**/*.unit.test.ts'],
+          environment: 'node',
+        },
+      }),
+      defineProject({
+        test: {
+          name: 'integration',
+          include: ['**/*/tests/integration/**/*.integration.test.ts', '**/*.integration.test.ts'],
+          environment: 'happy-dom',
+          testTimeout: 30_000,
+          sequence: { concurrent: false }, // safer for shared deps
+        },
+      }),
     ],
   },
 });
