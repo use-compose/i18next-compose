@@ -61,6 +61,16 @@ function createI18nAppInstance(): I18nApp {
       return this;
     },
 
+    // TODO: keep?
+    onLangChange(this: I18nApp, callback: (lng: string) => void): () => void {
+      this.on('languageChanged', callback);
+      // return unsubscribe function
+      log(`📟 - onLangChange → ${this.language}`);
+      return () => {
+        this.off('languageChanged', callback);
+      };
+    },
+
     missingTranslationHandler(this: I18nApp, key: string) {
       const { language, exists } = this;
       log(`missingTranslationHandler called - ${language}, exists: ${exists(key)}`);
