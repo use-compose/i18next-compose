@@ -1,6 +1,7 @@
 <template>
   <div class="colored-label" :style="{ '--label-bg-color': color }">
     {{ label }}
+    <p><slot /></p>
   </div>
 </template>
 

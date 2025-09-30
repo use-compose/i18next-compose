@@ -1,11 +1,12 @@
-<script lang="ts">
 import {
   componentsPresent,
   hasManyChildren,
+  isLowercaseHtmlTag,
   ParsedResult,
   parseTranslation,
+  removeNumberSuffix,
   TagObject,
-} from '@/utils/parse';
+} from '@/utils/parse-translation';
 import { TOptions } from 'i18next';
 import { cTFunc } from 'i18next-compose';
 import { isString } from 'unreadable-typescript';
@@ -95,12 +96,11 @@ export default defineComponent({
     });
 
     function renderComponent(element: TagObject): VNode | string {
+      const original = element.tag; // e.g. "ColoredLabel-1" or "strong"
+      const fileName = removeNumberSuffix(original); // "ColoredLabel"
       // const elementTag = removeNumberSuffix(element.tag);
-      const ElementComponent = defineAsyncComponent(
-        () => import(`@/components/${element.tag}.vue`),
-      );
 
-      const componentProps = props.components[element.tag];
+      const componentProps = props.components[original] ?? undefined;
 
       // If the component content contains other nested tags, we recursively render them
       const elementContent =
@@ -108,11 +108,21 @@ export default defineComponent({
           ? element.content.map((child) => renderComponent(child))
           : element.content;
 
+      // Render HTML tags natively (lowercase first letter)
+      if (isLowercaseHtmlTag(fileName)) {
+        // For <link> in your example: this will literally render <link>, which is not what you want.
+        // You likely intended <a>. If you want "link" to map to <a>, add a tiny mapping:
+        const htmlTag = fileName === 'link' ? 'a' : fileName;
+
+        return h(htmlTag, componentProps, () => elementContent);
+      }
+
       //TODO-NUXT-3: For HTML attributes
       // const attrs = props?.attrs;
 
       // Extract event listeners (e.g., @click)
       // const eventListeners = props?.value.onClick || {};
+      const ElementComponent = defineAsyncComponent(() => import(`@/components/${fileName}.vue`));
 
       return h(
         ElementComponent,
@@ -145,4 +155,3 @@ export default defineComponent({
     return () => renderParsedTranslation(parsedTranslation);
   },
 });
-</script>

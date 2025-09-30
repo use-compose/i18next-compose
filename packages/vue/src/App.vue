@@ -4,38 +4,22 @@ import i18nProvider from './components/i18nProvider.ts';
 import MainLayout from './components/layouts/MainLayout.vue';
 import HomePage from './pages/HomePage.vue';
 
+import DE_TRANSLATION from '../i18n/locales/de.json';
+import EN_TRANSLATION from '../i18n/locales/en.json';
+
 const i18nextConfigDefault: Createi18nConfigParams = {
   fallbackLng: 'en',
   debug: true,
   lng: 'en',
   supportedLanguages: ['en', 'de'],
+  interpolation: {
+    escapeValue: false,
+  },
+  initAsync: false,
   namespace: 'app_namespace',
   resources: {
-    en: {
-      app_namespace: {
-        home: {
-          welcome: 'Welcome to Nuxt 3 with <LangSwitcher>sdsds</LangSwitcher>',
-          description: 'This is a simple example of how to use i18next with Nuxt 3 and Vue 3',
-          interpolationExample:
-            'This is an example of interpolation with a <link>link</link> and a <strong>strong</strong> tag.',
-          componentInterpolationExample:
-            'This is an example of component interpolation with a <ColoredLabel>LangSwitcher</ColoredLabel> component.',
-        },
-      },
-    },
-    de: {
-      app_namespace: {
-        home: {
-          welcome: 'Willkommen zu Nuxt 3 mit i18next',
-          description:
-            'Dies ist ein einfaches Beispiel dafür, wie man i18next mit Nuxt 3 und Vue 3 verwendet',
-          interpolationExample:
-            'Dies ist ein Beispiel für Interpolation mit einem <link>Link</link> und einem <strong>strong</strong>-Tag.',
-          componentInterpolationExample:
-            'Dies ist ein Beispiel für Komponenteninterpolation mit einer <ColoredLabel>LangSwitcher</ColoredLabel>-Komponente.',
-        },
-      },
-    },
+    en: EN_TRANSLATION,
+    de: DE_TRANSLATION,
   },
 };
 </script>

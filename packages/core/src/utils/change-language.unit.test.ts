@@ -4,12 +4,12 @@ import { changeLanguage } from './change-language';
 
 describe('changeLanguage (unit)', () => {
   test('delegates to i18n.changeLanguage', async () => {
-    const i18n = createInstance({
+    const i18nApp = createInstance({
       lng: 'en',
     });
-    await i18n.init();
-    expect(i18n.language).toBe('en');
-    await changeLanguage(i18n, 'de');
-    expect(i18n.language).toBe('de');
+    await i18nApp.init();
+    expect(i18nApp.language).toBe('en');
+    await changeLanguage(i18nApp, 'de');
+    expect(i18nApp.language).toBe('de');
   });
 });
