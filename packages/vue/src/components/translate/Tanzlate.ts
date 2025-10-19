@@ -44,7 +44,7 @@ type ComponentsProps = {
 
 export default defineComponent({
   // eslint-disable-next-line vue/multi-word-component-names
-  name: 'Translate',
+  name: 'Tanzlate',
   props: {
     /**
      * (required)

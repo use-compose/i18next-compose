@@ -1,5 +1,5 @@
 export {
-  componentsPresent,
+  areComponentsPresent,
   hasManyChildren,
   isLowercaseHtmlTag,
   parseTranslation,
@@ -135,7 +135,7 @@ function removeNumberSuffix(str: string) {
  * Will return an array of strings of tags or null
  * Example: ["<NuxtLink>","</NuxtLink>"]
  */
-function componentsPresent(translationString: string): string[] | null {
+function areComponentsPresent(translationString: string): string[] | null {
   return translationString.match(i18nRegex.allTypesOfTags);
 }
 
@@ -143,11 +143,11 @@ function isLowercaseHtmlTag(name: string) {
   return /^[a-z]/.test(name);
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function isSelfClosingTag(str: string): boolean {
-  const selfClosingTags = str.match(i18nRegex.selfClosingTags);
-  return selfClosingTags ? selfClosingTags.includes(str) : false;
-}
+ 
+// function isSelfClosingTag(str: string): boolean {
+//   const selfClosingTags = str.match(i18nRegex.selfClosingTags);
+//   return selfClosingTags ? selfClosingTags.includes(str) : false;
+// }
 
 /*
  * Parse a given translation string and return an array of strings and objects
@@ -233,7 +233,7 @@ function parseTranslation(translationString: string): ParsedResult {
       result.push({ tag: next.tagName });
     } else {
       // paired tag
-      if (next.inner && componentsPresent(next.inner)) {
+      if (next.inner && areComponentsPresent(next.inner)) {
         result.push({
           tag: next.tagName,
           content: parseTranslation(next.inner) as string | TagObject[],
