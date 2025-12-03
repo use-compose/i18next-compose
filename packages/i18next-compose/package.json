@@ -36,7 +36,7 @@
     "vitest": "3.2.4"
   },
   "dependencies": {
-    "i18next": "25.0.0",
+    "i18next": "25.7.1",
     "@use-compose/i18next-core": "workspace:*",
     "happy-dom": "18.0.1"
   },
