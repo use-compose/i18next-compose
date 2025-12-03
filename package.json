@@ -47,7 +47,7 @@
     "@commitlint/cli": "19.8.1",
     "@commitlint/config-conventional": "19.8.1",
     "@use-compose/logger": "0.0.6",
-    "eslint-config-prettier": "10.0.3",
+    "eslint-config-prettier": "10.1.8",
     "husky": "9.1.7",
     "lint-staged": "16.0.0",
     "prettier": "3.5.3",
