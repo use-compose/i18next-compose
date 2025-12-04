@@ -46,7 +46,7 @@
     "npm-run-all2": "8.0.4",
     "typescript": "~5.8.0",
     "unreadable-typescript": "1.0.4",
-    "vite": "7.1.2",
+    "vite": "7.2.6",
     "vite-plugin-dts": "4.5.4",
     "vite-plugin-vue-devtools": "8.0.0",
     "vitest": "3.2.4",
