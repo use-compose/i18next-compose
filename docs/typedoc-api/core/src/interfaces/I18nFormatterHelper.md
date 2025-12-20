@@ -4,16 +4,18 @@
 
 ## Properties
 
-### globalNSHelper
+### translationHelper()
 
 ```ts
-globalNSHelper: cTFunc;
+translationHelper: (level2) => cTFunc;
 ```
 
----
+#### Parameters
 
-### translationHelper
+##### level2
 
-```ts
-translationHelper: ComposeTranslationHelper;
-```
+`Namespace`
+
+#### Returns
+
+[`cTFunc`](../type-aliases/cTFunc.md)

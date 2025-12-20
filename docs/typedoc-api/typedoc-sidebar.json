@@ -12,10 +12,8 @@
             "text": "Interfaces",
             "collapsed": false,
             "items": [
-              {
-                "text": "Createi18nConfigParams",
-                "link": "/typedoc-api/core/src/interfaces/Createi18nConfigParams.md"
-              },
+              { "text": "CoreContext", "link": "/typedoc-api/core/src/interfaces/CoreContext.md" },
+              { "text": "I18nApp", "link": "/typedoc-api/core/src/interfaces/I18nApp.md" },
               {
                 "text": "I18nFormatterHelper",
                 "link": "/typedoc-api/core/src/interfaces/I18nFormatterHelper.md"
@@ -27,28 +25,54 @@
             "collapsed": false,
             "items": [
               {
-                "text": "ComposeTranslationHelper",
-                "link": "/typedoc-api/core/src/type-aliases/ComposeTranslationHelper.md"
+                "text": "ChangeLanguageFunc",
+                "link": "/typedoc-api/core/src/type-aliases/ChangeLanguageFunc.md"
               },
-              { "text": "cTFunc", "link": "/typedoc-api/core/src/type-aliases/cTFunc.md" }
+              {
+                "text": "Createi18nConfigParams",
+                "link": "/typedoc-api/core/src/type-aliases/Createi18nConfigParams.md"
+              },
+              { "text": "cTFunc", "link": "/typedoc-api/core/src/type-aliases/cTFunc.md" },
+              {
+                "text": "InputNamespaces",
+                "link": "/typedoc-api/core/src/type-aliases/InputNamespaces.md"
+              }
+            ]
+          },
+          {
+            "text": "Variables",
+            "collapsed": false,
+            "items": [
+              {
+                "text": "changeLanguage",
+                "link": "/typedoc-api/core/src/variables/changeLanguage.md"
+              }
             ]
           },
           {
             "text": "Functions",
             "collapsed": false,
             "items": [
+              {
+                "text": "contextCoreStub",
+                "link": "/typedoc-api/core/src/functions/contextCoreStub.md"
+              },
               { "text": "getFlagEmoji", "link": "/typedoc-api/core/src/functions/getFlagEmoji.md" },
               {
-                "text": "i18NextFormatterMock",
-                "link": "/typedoc-api/core/src/functions/i18NextFormatterMock.md"
+                "text": "i18nFormatterHelper",
+                "link": "/typedoc-api/core/src/functions/i18nFormatterHelper.md"
               },
               {
-                "text": "i18nFormatter",
-                "link": "/typedoc-api/core/src/functions/i18nFormatter.md"
+                "text": "i18nFormatterMock",
+                "link": "/typedoc-api/core/src/functions/i18nFormatterMock.md"
               },
               {
                 "text": "initI18nConfig",
                 "link": "/typedoc-api/core/src/functions/initI18nConfig.md"
+              },
+              {
+                "text": "useCoreContext",
+                "link": "/typedoc-api/core/src/functions/useCoreContext.md"
               }
             ]
           }
@@ -70,12 +94,16 @@
             "collapsed": false,
             "items": [
               {
-                "text": "ComposeContext",
-                "link": "/typedoc-api/i18next-compose/src/interfaces/ComposeContext.md"
+                "text": "CoreContext",
+                "link": "/typedoc-api/i18next-compose/src/interfaces/CoreContext.md"
               },
               {
-                "text": "Createi18nConfigParams",
-                "link": "/typedoc-api/i18next-compose/src/interfaces/Createi18nConfigParams.md"
+                "text": "I18nApp",
+                "link": "/typedoc-api/i18next-compose/src/interfaces/I18nApp.md"
+              },
+              {
+                "text": "I18NextContext",
+                "link": "/typedoc-api/i18next-compose/src/interfaces/I18NextContext.md"
               },
               {
                 "text": "I18nFormatterHelper",
@@ -88,8 +116,20 @@
             "collapsed": false,
             "items": [
               {
+                "text": "ChangeLanguageFunc",
+                "link": "/typedoc-api/i18next-compose/src/type-aliases/ChangeLanguageFunc.md"
+              },
+              {
+                "text": "Createi18nConfigParams",
+                "link": "/typedoc-api/i18next-compose/src/type-aliases/Createi18nConfigParams.md"
+              },
+              {
                 "text": "cTFunc",
                 "link": "/typedoc-api/i18next-compose/src/type-aliases/cTFunc.md"
+              },
+              {
+                "text": "InputNamespaces",
+                "link": "/typedoc-api/i18next-compose/src/type-aliases/InputNamespaces.md"
               }
             ]
           },
@@ -98,12 +138,16 @@
             "collapsed": false,
             "items": [
               {
-                "text": "I18NextContext",
-                "link": "/typedoc-api/i18next-compose/src/variables/I18NextContext.md"
+                "text": "changeLanguage",
+                "link": "/typedoc-api/i18next-compose/src/variables/changeLanguage.md"
               },
               {
-                "text": "i18NextFormatterMock",
-                "link": "/typedoc-api/i18next-compose/src/variables/i18NextFormatterMock.md"
+                "text": "i18nextContextStub",
+                "link": "/typedoc-api/i18next-compose/src/variables/i18nextContextStub.md"
+              },
+              {
+                "text": "i18nFormatterMock",
+                "link": "/typedoc-api/i18next-compose/src/variables/i18nFormatterMock.md"
               }
             ]
           },
@@ -112,20 +156,28 @@
             "collapsed": false,
             "items": [
               {
-                "text": "composeContext",
-                "link": "/typedoc-api/i18next-compose/src/functions/composeContext.md"
+                "text": "composeI18nextContext",
+                "link": "/typedoc-api/i18next-compose/src/functions/composeI18nextContext.md"
+              },
+              {
+                "text": "contextCoreStub",
+                "link": "/typedoc-api/i18next-compose/src/functions/contextCoreStub.md"
               },
               {
                 "text": "getFlagEmoji",
                 "link": "/typedoc-api/i18next-compose/src/functions/getFlagEmoji.md"
               },
               {
-                "text": "i18nFormatter",
-                "link": "/typedoc-api/i18next-compose/src/functions/i18nFormatter.md"
+                "text": "i18nFormatterHelper",
+                "link": "/typedoc-api/i18next-compose/src/functions/i18nFormatterHelper.md"
               },
               {
                 "text": "initI18nConfig",
                 "link": "/typedoc-api/i18next-compose/src/functions/initI18nConfig.md"
+              },
+              {
+                "text": "useCoreContext",
+                "link": "/typedoc-api/i18next-compose/src/functions/useCoreContext.md"
               }
             ]
           }
