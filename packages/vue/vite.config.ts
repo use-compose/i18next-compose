@@ -38,7 +38,7 @@ export default defineConfig({
     // generate .vite/manifest.json in outDir
     // manifest: true,
     rollupOptions: {
-      external: ['@use-compose/i18next-core', 'vue'],
+      external: ['@use-compose/i18next-core', 'i18next-compose', 'vue'],
       output: { globals: { vue: 'Vue' } },
     },
     target: 'esnext',
