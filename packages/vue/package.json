@@ -2,31 +2,13 @@
   "name": "i18next-compose-vue",
   "version": "0.0.2",
   "private": false,
-  "type": "module",
-  "engines": {
-    "node": ">=20.19.0"
-  },
-  "files": [
-    "dist"
-  ],
-  "main": "dist/index.cjs",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "exports": {
-    "./package.json": "./package.json",
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts",
-      "require": "./dist/index.cjs"
-    }
-  },
   "scripts": {
-    "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
-    "preview": "vite preview",
-    "test:unit": "vitest",
-    "test:e2e": "playwright test",
     "build-only": "vite build",
+    "dev": "vite",
+    "preview": "vite preview",
+    "test:e2e": "playwright test",
+    "test:unit": "vitest",
     "type-check": "vue-tsc --build"
   },
   "dependencies": {
@@ -44,7 +26,7 @@
     "@vue/tsconfig": "0.7.0",
     "jsdom": "26.1.0",
     "npm-run-all2": "8.0.4",
-    "typescript": "~5.8.0",
+    "typescript": "^5.9.3",
     "unreadable-typescript": "1.0.4",
     "vite": "7.2.6",
     "vite-plugin-dts": "4.5.4",
@@ -52,7 +34,25 @@
     "vitest": "3.2.4",
     "vue-tsc": "3.0.4"
   },
+  "engines": {
+    "node": ">=20.19.0"
+  },
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "type": "module",
+  "types": "dist/index.d.ts"
 }
