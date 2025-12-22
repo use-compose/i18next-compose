@@ -1,22 +1,53 @@
 ---
 outline: [2, 3]
-order: 0
+order: 1
 ---
 
-# Motivation
+# i18next-compose
 
-One of the biggest challenge in Engineering is to ensure that everyone is on the same page.
+![NPM Package Version](https://img.shields.io/npm/v/i18next-compose?color=519ea9)
 
-This can relate to the codebase, the documentation, etc. It's often related as to be on the same **boat**.
+A lightweight library to manage translations with **component interpolation** and **complex translation strings**
 
-One biggest challenge is to share cross-team knowledge and doing processes that involve multiple teams.
-Translations are a good example of this. They involve:
+## Motivation
 
-- **Developers**: to implement the translation process
-- **Translators**: to translate the content
-- **Product Owners**: to validate the translations
-- **Designers**: to ensure that the translations are correctly displayed
-- **Content Writers**: to write the content
-  etc.
+Translation is rarely just an engineering concern—it often involves multiple teams:
 
-A **raft** is a boat that has everything to be built. And for this, simplicity and efficient tools are needed.
+- **Developers** implement the system.
+- **Translators** provide the content.
+- **Designers** ensure proper rendering.
+- **Product** Owners/Managers validate results.
+- **Content** Writers refine copy.
+
+i18next-compose provides a modular and efficient way to keep everyone aligned, without enforcing global `$t` helpers.
+
+---
+
+Built with a generic **core** package and framework-specific renderers for **Vue** and **React**.
+
+::: tip Why?
+Translations often involve developers, translators, designers, and product owners.  
+This library keeps everyone aligned by making complex translations easier to manage.
+:::
+
+- [Vanilla JS →](./core/)
+- [Vue →](./vue/)
+- [React →](./react/)
+
+## Installation
+
+::: code-group
+
+```bash [npm]
+npm install i18next-compose
+```
+
+```bash [yarn]
+yarn add i18next-compose
+```
+
+```bash [pnpm]
+pnpm add i18next-compose
+```
+
+:::

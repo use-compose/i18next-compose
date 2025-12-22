@@ -16,7 +16,15 @@ export default [
     languageOptions: { parserOptions: { parser: tseslint.parser } },
   },
   {
-    ignores: ['**/dist/', '**/cache/', '**/.nuxt/', '**/.nvm/', '**/.output/', '**/.husky/'],
+    ignores: [
+      '**/dist/',
+      '**/cache/',
+      '**/.nuxt/',
+      '**/.nvm/',
+      '**/.output/',
+      '**/.husky/',
+      '**/example/',
+    ],
   },
   eslintConfigPrettier,
 ];

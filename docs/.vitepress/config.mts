@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress';
+import { withMermaid } from 'vitepress-plugin-mermaid';
 import typedocSidebar from '../typedoc-api/typedoc-sidebar.json';
 
 const sidebar = {
@@ -20,6 +21,14 @@ const sidebar = {
       ],
     },
     {
+      text: 'Vue',
+      items: [
+        { text: 'Getting Started', link: '/vue/' },
+        { text: 'Components Interpolation', link: '/vue/components-interpolation' },
+        { text: 'API', link: '/vue/api' },
+      ],
+    },
+    {
       text: 'API',
       items: [
         { text: 'Utility Functions', link: '/api/utility-functions' },
@@ -34,7 +43,7 @@ const sidebar = {
 };
 
 // https://vitepress.dev/reference/site-config
-export default defineConfig({
+const config = defineConfig({
   title: 'i18next-compose',
   description: 'A VitePress Site',
   themeConfig: {
@@ -46,7 +55,9 @@ export default defineConfig({
 
     sidebar: sidebar,
 
-    socialLinks: [{ icon: 'github', link: 'https://github.com/vuejs/vitepress' }],
+    socialLinks: [{ icon: 'github', link: 'https://github.com/use-compose/i18next-compose' }],
   },
   cleanUrls: true,
 });
+
+export default withMermaid(config);

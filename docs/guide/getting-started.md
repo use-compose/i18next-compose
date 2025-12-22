@@ -3,28 +3,39 @@ outline: [2, 3]
 order: 1
 ---
 
-# Getting Started
+# i18next-compose
 
-## Overview
+![NPM Package Version](https://img.shields.io/npm/v/i18next-compose?color=519ea9)
 
-One of the biggest challenge in Engineering is to ensure that everyone is on the same page.
-This can relate to the codebase, the documentation, etc. It's often related as to be on the same **boat**.
+A lightweight library to manage translations with **component interpolation** and **complex translation strings**
 
-And cometimes it goes beyond Engineering, and is to share cross-team knowledge and doing processes that involve multiple teams.
-Translations are a good example of this. They involve:
+## Motivation
 
-- **Developers**: to implement the translation process
-- **Translators**: to translate the content
-- **Product Owners**: to validate the translations
-- **Designers**: to ensure that the translations are correctly displayed
-- **Content Writers**: to write the content
-  etc.
+Translation is rarely just an engineering concern—it often involves multiple teams:
 
-This Library aims to provide a simple and efficient way to manage translations in a Vue or Nuxt project.
+- Developers implement the system.
+- Translators provide the content.
+- Designers ensure proper rendering.
+- Product Owners/Managers validate results.
+- Content Writers refine copy.
+
+i18next-compose provides a modular and efficient way to keep everyone aligned, without enforcing global `$t` helpers.
+
+---
+
+Built with a generic **core** package and framework-specific renderers for **Vue** and **React**.
+
+::: tip Why?
+Translations often involve developers, translators, designers, and product owners.  
+This library keeps everyone aligned by making complex translations easier to manage.
+:::
+
+- [Vue →](./vue/)
+- [React →](./react/)
 
 ## Installation
 
-:::code-group
+::: code-group
 
 ```bash [npm]
 npm install i18next-compose
@@ -44,25 +55,77 @@ pnpm add i18next-compose
 
 There are different ways to use i18next-compose.
 
-1. You can initialize the configuration in standalone mode:
+### Context Provider (recommended)
 
-```js
-import { Createi18nConfigParams, i18nConfigInit } from 'i18next-compose';
+The best way is to create a context that will provide the i18next instance and the corresponding helper functions to your application.
 
-function initi18nextCompose()
- const i18nParams: Createi18nConfigParams = {
-    namespace: 'my_namespace',
-    fallbackLng: 'en',
-    lng: 'en',
-    supportedLanguages: ['en', 'fr', 'de'],
-  };
+::: code-group
 
-  const i18next = await i18nConfigInit(i18nParams);
+```js [JavaScript]
+import { composeI18nextContext } from 'i18next-compose';
 
-  return i18next;
-}
+const i18nParams = {
+  namespace: 'my_namespace',
+  fallbackLng: 'en',
+  lng: 'en',
+  supportedLanguages: ['en', 'fr', 'de'],
+};
+const context = await composeI18nextContext(i18nParams);
 ```
 
+```ts [TypeScript]
+import { composeI18nextContext } from 'i18next-compose';
+import type { Createi18nConfigParams, I18nextContext } from 'i18next-compose';
+
+const i18nParams: Createi18nConfigParams = {
+  namespace: 'my_namespace',
+  fallbackLng: 'en',
+  lng: 'en',
+  supportedLanguages: ['en', 'fr', 'de'],
+};
+
+// type will be inferred as I18nextContext but you can also explicitly type it
+const context: I18nextContext = await composeI18nextContext(i18nParams);
+```
+
+:::
+
+### Standalone initialization
+
+2. You can initialize the configuration in standalone mode:
+
+::: code-group
+
+```js [JavaScript]
+import { i18nConfigInit } from 'i18next-compose';
+
+const i18nParams = {
+  namespace: 'my_namespace',
+  fallbackLng: 'en',
+  lng: 'en',
+  supportedLanguages: ['en', 'fr', 'de'],
+};
+
+const i18App = await i18nConfigInit(i18nParams);
+
+return i18App;
+```
+
+```ts [TypeScript]
+import { i18nConfigInit } from 'i18next-compose';
+import type { Createi18nConfigParams, I18nApp } from 'i18next-compose';
+
+const i18nParams: Createi18nConfigParams = {
+  namespace: 'my_namespace',
+  fallbackLng: 'en',
+  lng: 'en',
+  supportedLanguages: ['en', 'fr', 'de'],
+};
+
+const i18App: I18nApp = await i18nConfigInit(i18nParams);
+```
+
+:::
 Behind the scenes, this will create a new i18next instance with the provided configuration. You can then use this instance to translate your content using the i18next helper functions.
 
 :::tip

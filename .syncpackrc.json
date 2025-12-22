@@ -1,0 +1,24 @@
+{
+  "$schema": "./node_modules/syncpack/schema.json",
+  "sortPackages": true,
+  "sortFirst": [
+    "name",
+    "description",
+    "version",
+    "author",
+    "private",
+    "scripts",
+    "dependencies",
+    "devDependencies",
+    "engines"
+  ],
+  "versionGroups": [
+    {
+      "label": "Force exact versions everywhere",
+      "dependencies": ["**"],
+      "dependencyTypes": ["**"],
+      "packages": ["**"],
+      "specifierTypes": ["exact"]
+    }
+  ]
+}

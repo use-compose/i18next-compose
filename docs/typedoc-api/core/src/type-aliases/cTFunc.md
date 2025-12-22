@@ -3,14 +3,18 @@
 # Type Alias: cTFunc()
 
 ```ts
-type cTFunc = (ns, params?) => string;
+type cTFunc = string;
+```
+
+```ts
+type cTFunc(ns, params?): string;
 ```
 
 ## Parameters
 
 ### ns
 
-`InputNamespaces`
+[`InputNamespaces`](InputNamespaces.md)
 
 ### params?
 
@@ -19,3 +23,11 @@ type cTFunc = (ns, params?) => string;
 ## Returns
 
 `string`
+
+## Properties
+
+### namespace?
+
+```ts
+optional namespace: Namespace;
+```

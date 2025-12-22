@@ -1,8 +1,8 @@
 {
   "entryPoints": [
     "./packages/core/src/index.ts",
-    "./packages/i18next-compose/src/index.ts",
-    "./packages/vue/src/index.ts"
+    "./packages/i18next-compose/src/index.ts"
+    // "./packages/vue/src/index.ts"
   ],
   "plugin": ["typedoc-plugin-markdown", "typedoc-vitepress-theme"],
   "out": "./docs/typedoc-api",
@@ -17,5 +17,11 @@
     "format": "vitepress",
     "pretty": false,
     "collapsed": false
+  },
+  "jsDocCompatibility": {
+    "exampleTag": true,
+    "defaultTag": true,
+    "inheritDocTag": true,
+    "ignoreUnescapedBraces": true
   }
 }

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { i18nKey } from '@/types/i18n-key';
 import {
   composeI18nextContext,
@@ -6,7 +5,7 @@ import {
   I18NextContext,
   i18nextContextStub,
 } from 'i18next-compose';
-import { computed, inject, onUnmounted, ref, Ref } from 'vue';
+import { inject, onUnmounted, ref, Ref } from 'vue';
 
 export function useI18nContext() {
   const context: Ref<I18NextContext> = ref(i18nextContextStub);
@@ -41,41 +40,53 @@ export function useI18nContext() {
   return { initContext, context }; //, lang
 }
 
-// TODO: fix (from GPT)
-// small helper: wraps a getter of a function into a stable, plain function
-function reactiveFn<F extends (...a: any[]) => any>(get: () => F): F {
-  // we capture a computed below; this wrapper just dereferences it at call time
-  return ((...args: any[]) => get()(...(args as Parameters<F>))) as F;
-}
-
 export function useI18n(ns: string) {
   const ctxRef = inject<Ref<I18NextContext>>(i18nKey)!;
 
+  const i18nApp = ctxRef.value.i18nApp;
+  if (!i18nApp) {
+    throw new Error('i18nApp is not available in the context. Make sure to provide i18n context.');
+  }
+
+  const cT = ref(ctxRef.value.translationHelper(ns));
+  const globalT = ref(ctxRef.value.globalNSHelper);
+
   // 1) reactive language (driven by i18next events)
-  const langRef = ref(ctxRef.value.i18nApp.language);
-  const stop = ctxRef.value.onLangChange((lng) => (langRef.value = lng));
-  onUnmounted(stop);
+  const langRef = ref(i18nApp.language);
+  const unsubscribe = ctxRef.value.onLangChange((lng) => {
+    langRef.value = lng;
+    ctxRef.value.i18nApp.language = lng;
+    cT.value = ctxRef.value.translationHelper(ns);
+    globalT.value = ctxRef.value.globalNSHelper;
+  });
+  onUnmounted(unsubscribe);
+
+  // i18nApp.on('languageChanged', function (lng) {
+  //   cT.value = ctxRef.value.translationHelper(ns);
+  //   globalGetter.value = ctxRef.value.globalNSHelper;
+  //   langRef.value = lng;
+  // });
 
   // 2) make getters that *depend on* the language
   //    when langRef changes, these recompute to the latest helper
-  const cTGetter = computed(() => {
-    void langRef.value; // establish dependency on the language (no tick)
-    return ctxRef.value.translationHelper(ns);
-  });
+  // const cTGetter = computed(() => {
+  //   void langRef.value; // establish dependency on the language (no tick)
+  //   return ctxRef.value.translationHelper(ns);
+  // });
 
-  const globalGetter = computed(() => {
-    void langRef.value;
-    return ctxRef.value.composeHelper('global');
-  });
+  // const globalGetter = computed(() => {
+  //   void langRef.value;
+  //   return ctxRef.value.composeHelper('global');
+  // });
 
   // 3) expose stable plain functions that read the latest helpers
-  const cT = reactiveFn(() => cTGetter.value);
-  const globalNSHelper = reactiveFn(() => globalGetter.value);
+  // const cT = reactiveFn(() => cTGetter.value);
+  // const globalNSHelper = reactiveFn(() => globalGetter.value);
 
   return {
     i18nApp: ctxRef.value.i18nApp,
-    cT, // call as cT('welcome'), both in template and script
-    globalNSHelper, // same
+    cT,
+    globalT,
     changeLanguage: (lng: string) => ctxRef.value.lang(lng),
     lang: ctxRef.value.lang,
   };
