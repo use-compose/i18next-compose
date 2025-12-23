@@ -1,5 +1,13 @@
 # i18next-compose-vue
 
+## 0.0.3
+
+### Patch Changes
+
+- 9a1e52f: Implement interpolation of Vue Component self-closing tags first working version \n Fix lint and cleanup / document Translate component
+- Updated dependencies [9a1e52f]
+  - i18next-compose@0.1.4
+
 ## 0.0.2
 
 ### Patch Changes
