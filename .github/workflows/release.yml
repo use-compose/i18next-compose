@@ -19,17 +19,20 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v6
         with:
-          version: 10
+          node-version: 20
+          registry-url: https://registry.npmjs.org
+
+      - name: Enable Corepack (pnpm)
+        run: |
+          corepack enable
+          corepack prepare pnpm@10 --activate
+          npm --version
+          pnpm --version
 
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
-
-      - name: Ensure npm supports trusted publishing
-        run: |
-          sudo npm i -g npm@^11.5.1
-          npm --version
 
       - name: Create Release Pull Request or Publish
         uses: changesets/action@v1
