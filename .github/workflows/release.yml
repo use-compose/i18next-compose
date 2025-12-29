@@ -28,7 +28,7 @@ jobs:
 
       - name: Ensure npm supports trusted publishing
         run: |
-          npm i -g npm@^11.5.1
+          sudo npm i -g npm@^11.5.1
           npm --version
 
       - name: Create Release Pull Request or Publish
