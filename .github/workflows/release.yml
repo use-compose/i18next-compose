@@ -2,37 +2,34 @@ name: Release
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   workflow_dispatch:
-  pull_request:
 
 jobs:
   release:
     permissions:
-      contents: write # to create release (changesets/action)
-      pull-requests: write # to create pull request (changesets/action)
-      id-token: write #  required for provenance and oidc publish
+      contents: write
+      pull-requests: write
+      id-token: write
+
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v5
         with:
-          # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
           fetch-depth: 0
+
       - uses: pnpm/action-setup@v4
         with:
           version: 10
-          
-      - name: Update npm for OIDC trusted publishing
-        run: |
-          # npm trusted publishing requires npm >= 11.5.1
-          # Node.js 20.x ships with npm 10.x, so we need to update
-          echo "Current npm version: $(npm --version)"
-          npm update -g npm # temporary until setup-node action comes with npm version that contains oidc setup by default
-          echo "Updated npm version: $(npm --version)"
-      
+
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
+
+      - name: Ensure npm supports trusted publishing
+        run: |
+          npm i -g npm@^11.5.1
+          npm --version
 
       - name: Create Release Pull Request or Publish
         uses: changesets/action@v1
@@ -40,7 +37,7 @@ jobs:
           publish: pnpm release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: "true"
 
       - name: Push the release tags back
         run: git push --follow-tags
