@@ -53,6 +53,10 @@
   "publishConfig": {
     "access": "public"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/use-compose/i18next-compose"
+  },
   "type": "module",
   "types": "dist/index.d.ts"
 }
