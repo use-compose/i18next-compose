@@ -1,5 +1,11 @@
 # core
 
+## 0.2.0
+
+### Minor Changes
+
+- 04d4919: Fix all package .mjs
+
 ## 0.1.5
 
 ### Patch Changes

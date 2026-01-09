@@ -1,5 +1,16 @@
 # i18next-compose
 
+## 0.2.0
+
+### Minor Changes
+
+- 04d4919: Fix all package .mjs
+
+### Patch Changes
+
+- Updated dependencies [04d4919]
+  - @use-compose/i18next-core@0.2.0
+
 ## 0.1.4
 
 ### Patch Changes
