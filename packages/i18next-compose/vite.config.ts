@@ -21,7 +21,7 @@ export default defineConfig({
       name: 'i18next-compose',
       fileName: (format) => {
         if (format === 'es') return 'index.mjs';
-        if (format === 'cjs') return 'index.cjs';
+        if (format === 'cjs') return 'index.js';
         return `index.${format}.js`;
       },
       formats: ['es', 'cjs'],

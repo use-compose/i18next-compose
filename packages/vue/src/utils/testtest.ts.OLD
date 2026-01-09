@@ -1,0 +1,61 @@
+type Text = string;
+type Node = { tag: string; content?: Text | Node[] };
+export type ParsedResult = (Text | Node)[];
+
+// Tiny helpers
+const hasTags = (s: string) =>
+  /<([A-Z][\w-]*|[a-z][a-z0-9-]*)\b[^>]*>.*?<\/\1>|<([A-Z][\w-]*|[a-z][a-z0-9-]*)\b[^>]*\/>/.test(
+    s,
+  );
+
+/**
+ * Matches either:
+ * 1) <Tag attrs?>inner</Tag>   (groups: 1=name, 2=attrs, 3=inner)
+ * 2) <Tag attrs? />            (groups: 4=name, 5=attrs)
+ */
+const TAG =
+  /<([A-Z][\w-]*|[a-z][a-z0-9-]*)\s*([^>]*)\s*(?:\/)?>((?:.|[\r\n])*?)<\/\1\s*>|<([A-Z][\w-]*|[a-z][a-z0-9-]*)\s*([^>]*)\s*\/>/g;
+
+export function parseTranslation(input: string): ParsedResult {
+  const out: ParsedResult = [];
+  let cursor = 0;
+  TAG.lastIndex = 0;
+
+  const pushText = (end: number) => {
+    if (end > cursor) {
+      const text = input.slice(cursor, end);
+      if (text) out.push(text);
+      cursor = end;
+    }
+  };
+
+  let m: RegExpExecArray | null;
+  while ((m = TAG.exec(input))) {
+    const start = m.index;
+    const end = TAG.lastIndex;
+
+    // text before this match
+    pushText(start);
+
+    if (m[1]) {
+      // paired tag
+      const name = m[1];
+      const inner = m[3] ?? '';
+      out.push(
+        hasTags(inner)
+          ? { tag: name, content: parseTranslation(inner) }
+          : { tag: name, content: inner.trim() },
+      );
+    } else {
+      // self-closing tag
+      const name = m[4]!;
+      out.push({ tag: name });
+    }
+
+    cursor = end;
+  }
+
+  // trailing text
+  pushText(input.length);
+  return out;
+}

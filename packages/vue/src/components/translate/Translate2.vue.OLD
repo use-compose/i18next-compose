@@ -1,0 +1,134 @@
+<script lang="ts">
+import {
+  extractTagsFromString,
+  normalizeTagName,
+  parseTranslationString,
+  type ParsedOutput,
+  type ParsedTag,
+} from '@/utils/translation-parser';
+
+import { TOptions } from 'i18next';
+import { cTFunc } from 'i18next-compose';
+import { computed, defineAsyncComponent, defineComponent, h, PropType, VNode } from 'vue';
+
+// --- Types for props to pass into components ---
+type ComponentPropValue =
+  | string
+  | number
+  | boolean
+  | null
+  | undefined
+  | object
+  | Date
+  | Array<string | number | boolean | null | undefined | object | Date | symbol>
+  | symbol;
+
+type ComponentsProps = {
+  // props per tag as you already had (key must match the tag *with* suffix)
+  [tagName: string]: { [key: string]: ComponentPropValue } | null;
+};
+
+// --- Utilities ---
+function nodeHasChildrenArray(node: ParsedTag): node is ParsedTag & { content: ParsedTag[] } {
+  if (!node.content) return false;
+  return Array.isArray(node.content);
+}
+
+function isLowercaseHtmlTag(name: string) {
+  return /^[a-z]/.test(name);
+}
+
+export default defineComponent({
+  name: 'Translate2',
+  props: {
+    cTranslate: { type: Function as PropType<cTFunc>, required: true },
+    i18nKey: { type: String, required: true },
+    values: { type: Object as PropType<TOptions>, required: false },
+    components: { type: Object as PropType<ComponentsProps>, default: () => ({}) },
+  },
+  setup(props, { slots }) {
+    console.log('📟 - slots → ', slots);
+    const translationText = computed(() =>
+      props.values
+        ? props.cTranslate(props.i18nKey, props.values)
+        : props.cTranslate(props.i18nKey),
+    );
+
+    // If there are no tags, render plain text
+    if (!extractTagsFromString(translationText.value as string)) {
+      return () => translationText.value as string;
+    }
+
+    const parsedNodes = computed<ParsedOutput>(() =>
+      parseTranslationString(translationText.value as string),
+    );
+    console.log('📟 - parsedNodes → ', parsedNodes);
+
+    function renderParsedNode(node: ParsedTag): VNode | string {
+      console.log('📟 - node → ', node);
+      if (typeof node === 'string') return node;
+
+      const originalTagName = node.tag; // e.g., "ColoredLabel-1" or "strong"
+      const importTagName = normalizeTagName(originalTagName); // "ColoredLabel-1" -> "ColoredLabel"
+      console.log('📟 - importTagName → ', importTagName);
+      const componentProps = props.components[originalTagName] ?? undefined;
+
+      // Render HTML tags natively (lowercase first letter)
+      if (isLowercaseHtmlTag(importTagName)) {
+        const children = nodeHasChildrenArray(node)
+          ? node.content.map(renderParsedNode)
+          : node.content;
+        console.log('📟 - children → ', children);
+
+        // For <link> in your example: this will literally render <link>, which is not what you want.
+        // You likely intended <a>. If you want "link" to map to <a>, add a tiny mapping:
+        const htmlTag = importTagName === 'link' ? 'a' : importTagName;
+        console.log('📟 - htmlTag → ', htmlTag);
+        const childrenRender = Array.isArray(children)
+          ? children
+          : children != null
+            ? [children]
+            : [];
+        console.log('📟 - childrenRender → ', childrenRender);
+
+        return h(htmlTag, componentProps, { default: () => childrenRender });
+      }
+
+      // For PascalCase tags, lazy-load a component file from "@/components/<Name>.vue"
+      const AsyncComponent = defineAsyncComponent(
+        () => import(`@/components/${importTagName}.vue`),
+      );
+      console.log('📟 - AsyncComponent → ', AsyncComponent);
+
+      const children = nodeHasChildrenArray(node)
+        ? node.content.map(renderParsedNode)
+        : node.content;
+      console.log('📟 - children → ', children);
+
+      const normalizedChildren = Array.isArray(children)
+        ? children.map(renderParsedNode)
+        : children != null
+          ? [children]
+          : [];
+      console.log('📟 - normalizedChildren → ', normalizedChildren);
+
+      // default slot
+      console.log('📟 - normalizedChildren → ', normalizedChildren);
+      return h(
+        AsyncComponent,
+        componentProps,
+        normalizedChildren.length ? { default: () => normalizedChildren } : undefined,
+      );
+    }
+
+    console.log('📟 - parsedNodes → ', parsedNodes);
+    return () => {
+      return parsedNodes.value.map((node) => {
+        console.log('📟 - node → ', node);
+
+        return renderParsedNode(node);
+      });
+    };
+  },
+});
+</script>
