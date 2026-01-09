@@ -1,5 +1,16 @@
 # i18next-compose-vue
 
+## 0.1.0
+
+### Minor Changes
+
+- 04d4919: Fix all package .mjs
+
+### Patch Changes
+
+- Updated dependencies [04d4919]
+  - i18next-compose@0.2.0
+
 ## 0.0.3
 
 ### Patch Changes
