@@ -24,8 +24,8 @@ export default defineConfig({
       entry: fileURLToPath(new URL('./src/index.ts', import.meta.url)),
       name: '@use-compose/i18next-core',
       fileName: (format) => {
-        if (format === 'es') return 'index.js';
-        if (format === 'cjs') return 'index.cjs';
+        if (format === 'es') return 'index.mjs';
+        if (format === 'cjs') return 'index.js';
         return `index.${format}.js`;
       },
       formats: ['es', 'cjs'],

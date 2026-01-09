@@ -1,0 +1,101 @@
+// utils/translation-parser.ts
+
+export interface ParsedTag {
+  tag: string;
+  content?: ParsedTag[] | string;
+}
+
+export type ParsedOutput = (string | ParsedTag)[];
+
+/**
+ * Quick check if a string has any tag-like markup.
+ */
+function stringContainsTags(text: string): boolean {
+  return /<([A-Za-z][\w-]*)\b[^>]*>[\s\S]*?<\/\1>|<([A-Za-z][\w-]*)\b[^>]*\/>/.test(text);
+}
+
+/**
+ * Regex that matches:
+ * - a paired tag with inner content: <Tag ...>inner</Tag>
+ * - OR a self-closing tag: <Tag ... />
+ *
+ * Groups:
+ *   m[1] = paired tag name
+ *   m[2] = paired tag inner content
+ *   m[3] = self-closing tag name
+ */
+const TAG_PATTERN = /<([A-Za-z][\w-]*)[^>]*>([\s\S]*?)<\/\1>|<([A-Za-z][\w-]*)[^>]*\/>/g;
+
+/**
+ * Extracts all tags (opening/closing/self-closing) from a string.
+ */
+export function extractTagsFromString(text: string): string[] | null {
+  const matches = text.match(/<\/?([A-Za-z][\w-]*)\b[^>]*\/?>/g);
+  return matches && matches.length > 0 ? matches : null;
+}
+
+/**
+ * Utility: strip suffix like `-1` or `-2` from a tag name.
+ */
+export function normalizeTagName(tagName: string): string {
+  return tagName.replace(/-\d+$/, '');
+}
+
+/**
+ * Parse a translation string into plain text segments and structured tag objects.
+ *
+ * Example:
+ *   Input: "Click <Link>here</Link> or <Icon />"
+ *   Output: [
+ *     "Click ",
+ *     { tag: "Link", content: "here" },
+ *     " or ",
+ *     { tag: "Icon" }
+ *   ]
+ */
+export function parseTranslationString(input: string): ParsedOutput {
+  const parsed: ParsedOutput = [];
+  let cursorPosition = 0;
+  TAG_PATTERN.lastIndex = 0;
+
+  const pushPlainText = (endPosition: number) => {
+    if (endPosition > cursorPosition) {
+      const plainText = input.slice(cursorPosition, endPosition);
+      if (plainText) {
+        parsed.push(plainText);
+      }
+      cursorPosition = endPosition;
+    }
+  };
+
+  let match: RegExpExecArray | null;
+  while ((match = TAG_PATTERN.exec(input))) {
+    // plain text before this tag
+    pushPlainText(match.index);
+
+    if (match[1]) {
+      // Paired tag
+      const tagName = match[1];
+      const innerContent = match[2] ?? '';
+      if (stringContainsTags(innerContent)) {
+        parsed.push({
+          tag: tagName,
+          content: parseTranslationString(innerContent),
+        });
+      } else {
+        parsed.push({ tag: tagName, content: innerContent.trim() });
+      }
+    } else {
+      // Self-closing tag
+      const tagName = match[3]!;
+      parsed.push({ tag: tagName });
+    }
+
+    cursorPosition = TAG_PATTERN.lastIndex;
+  }
+
+  // trailing text
+  pushPlainText(input.length);
+
+  return parsed;
+}
