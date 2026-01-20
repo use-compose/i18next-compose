@@ -30,8 +30,8 @@ Translations often involve developers, translators, designers, and product owner
 This library keeps everyone aligned by making complex translations easier to manage.
 :::
 
-- [Vue →](./vue/)
-- [React →](./react/)
+- [Vue →](/vue/)
+- [React →](/react/)
 
 ## Installation
 
