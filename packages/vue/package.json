@@ -12,7 +12,7 @@
     "type-check": "vue-tsc --build"
   },
   "dependencies": {
-    "i18next": "25.7.1",
+    "i18next": "25.8.0",
     "i18next-compose": "workspace:*",
     "vue": "3.5.18"
   },
