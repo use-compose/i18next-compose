@@ -25,6 +25,8 @@ const sidebar = {
       items: [
         { text: 'Getting Started', link: '/vue/' },
         { text: 'Components Interpolation', link: '/vue/components-interpolation' },
+        { text: 'Component Registry', link: '/vue/component-registry' },
+        { text: 'Research', link: '/vue/research' },
         { text: 'API', link: '/vue/api' },
       ],
     },

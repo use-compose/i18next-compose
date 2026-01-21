@@ -30,9 +30,9 @@ Translations often involve developers, translators, designers, and product owner
 This library keeps everyone aligned by making complex translations easier to manage.
 :::
 
-- [Vanilla JS →](./core/)
-- [Vue →](./vue/)
-- [React →](./react/)
+- [Vanilla JS →](/vanilla/)
+- [Vue →](/vue/)
+- [React →](/react/)
 
 ## Installation
 
