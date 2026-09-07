@@ -4,28 +4,76 @@ export {
   isLowercaseHtmlTag,
   parseTranslation,
   removeNumberSuffix,
+  type FlatComponent,
 };
-export type { FlatComponent, ParsedResult, TagObject };
+
+/*
+ * Accepted tag names, used by every pattern below:
+ *
+ *   [A-Za-z][A-Za-z0-9-]*(?=[\s/>])
+ *
+ * - PascalCase components ......... <NuxtLink>
+ * - kebab-case and HTML tags ...... <my-component>, <strong>
+ * - numeric suffix for repeats .... <NuxtLink-2>, <my-component-2>
+ *
+ * Underscores are excluded on purpose -- snake_case is not a Vue component convention.
+ * The (?=[\s/>]) after the name is what enforces it: without it the attributes group
+ * swallows the rest, so <my_component> parsed as a <my> tag with attributes "_component".
+ *
+ * --------------------------------------------
+ *
+ * We need to consider 3 cases:
+ * 1 Opening tags (e.g. <NuxtLink>)
+ * 2 Closing tags (e.g. </NuxtLink>)
+ * 3 Self-closing tags (e.g. <NuxtLink />, which in this case could refer to a class as the logo in the login page)
+ *
+ * We will then inject the props directly in the template that call the Tanzlate component
+ * in the case 3 it's more straightforward but in the case 1 and 2 we need to also keep the content inside the tag
+ *
+ * These are 3 RegEx that we can use to detect components or tags in the translation value.
+ * All of them also support kebab-case, in case of an external library.
+ */
+
+const i18nRegex = {
+  /*
+   * Self-closing tags.
+   *   <Tag />        <Tag ... />        <Tag-2 />
+   *
+   * Groups: 1 tag name, 2 attributes (unused)
+   *
+   * regex101: TODO save and paste link
+   */
+  selfClosingTags: /<([A-Za-z][A-Za-z0-9-]*)(?=[\s/>])\s*([^>]*)\s*\/>/g,
+
+  /*
+   * Any tag at all -- opening, closing or self-closing. Used only to answer
+   * "does this string contain tags?", never to extract content.
+   *   <Tag>          </Tag>             <Tag />
+   *
+   * Groups: 1 opening name, 2 attributes (unused), 3 self-closing slash, 4 closing name
+   *
+   * regex101: TODO save and paste link
+   */
+  allTypesOfTags:
+    /<([A-Za-z][A-Za-z0-9-]*)(?=[\s/>])\s*([^>]*)\s*(\/?)>|<\/([A-Za-z][A-Za-z0-9-]*)\s*>/g,
+
+  /*
+   * A paired tag with everything between it. The \1 backreference is what ties the closing
+   * tag to the opening one, so <b>x</b> matches but <b>x</i> does not.
+   *   <Tag>inner</Tag>               <Tag-2>inner</Tag-2>
+   *
+   * Groups: 1 tag name, 2 attributes (unused), 3 inner content
+   *
+   * https://regex101.com/r/3SXgzD/1
+   */
+  openingAndClosingTagsWithContent:
+    /<([A-Za-z][A-Za-z0-9-]*)(?=[\s/>])\s*([^>]*)\s*(?:\/)?>([\s\S]*?)<\/\1\s*>/g,
+};
 
 /**
- * Tag names accepted inside a translation string:
- * - PascalCase components: `<NuxtLink>`
- * - kebab-case components and HTML tags: `<my-component>`, `<strong>`
- * - a numeric suffix, to use the same component twice in one string: `<NuxtLink-2>`
+ * Types
  */
-const TAG_NAME = '[A-Za-z][\\w-]*';
-
-// Only used to detect whether a string contains any tag at all.
-const ANY_TAG = new RegExp(`</?${TAG_NAME}\\s*[^>]*/?>`, 'g');
-
-/**
- * Matches a single tag. Quoted runs are consumed whole so a stray `>` inside one can't
- * end the tag early. Groups: 1 closing slash, 2 name, 3 ignored, 4 self-closing slash.
- */
-const TOKEN = new RegExp(`<(/)?(${TAG_NAME})((?:"[^"]*"|'[^']*'|[^>])*?)(/)?>`, 'g');
-
-/** A parsed tag. Props are never carried here -- they come from the `components` map. */
-interface TagObject {
+export interface TagObject {
   tag: string;
   content?: TagObject[] | string;
 }
@@ -35,16 +83,14 @@ interface FlatComponent {
   content: string;
 }
 
-type ParsedResult = (string | TagObject)[];
+export type ParsedResult = (string | TagObject)[]; // | ParsedResult[]
 
-interface Token {
-  kind: 'open' | 'close' | 'self';
-  tag: string;
-  start: number;
-  end: number;
-}
-
-// True when the tag holds child tokens rather than a plain string.
+/**
+ * Utility to check if a parsed tag object has multiple children
+ *
+ * @param {TagObject} element
+ * @returns {boolean}
+ */
 function hasManyChildren(element: TagObject): boolean {
   if (!element.content) {
     return false;
@@ -52,143 +98,131 @@ function hasManyChildren(element: TagObject): boolean {
   return Array.isArray(element.content);
 }
 
-/**
- * Strips the disambiguating suffix used when the same component appears more than once
- * in a single translation string: `NuxtLink-2` -> `NuxtLink`.
+/*
+ * Used to handle cases when a translation string contains multiple tags with the same name
+ * e.g. "<NuxtLink>Wilkommen</NuxtLink> <NuxtLink-2>zurück</NuxtLink-2>""
+ * We remove the hyphen and the number to only render the real tag name
  */
-function removeNumberSuffix(str: string): string {
-  return str.replace(/-\d+$/, '');
+function removeNumberSuffix(str: string) {
+  return str.replace(/-\d+$/, ''); // only at the end
 }
 
 /*
- * Array of the tags found, or null.
- * Example: ["<NuxtLink>", "</NuxtLink>"]
+ * Will return an array of strings of tags or null
+ * Example: ["<NuxtLink>","</NuxtLink>"]
  */
 function areComponentsPresent(translationString: string): string[] | null {
-  ANY_TAG.lastIndex = 0;
-  return translationString.match(ANY_TAG);
+  return translationString.match(i18nRegex.allTypesOfTags);
 }
 
-// Lowercase first letter means a native HTML element, not a component.
-function isLowercaseHtmlTag(name: string): boolean {
+function isLowercaseHtmlTag(name: string) {
   return /^[a-z]/.test(name);
 }
 
-// Next tag at or after `from`, or null.
-function nextToken(input: string, from: number): Token | null {
-  TOKEN.lastIndex = from;
-  const m = TOKEN.exec(input);
-  if (!m) {
-    return null;
-  }
-
-  const [raw, closing, tag, , selfClosing] = m;
-
-  return {
-    kind: closing ? 'close' : selfClosing ? 'self' : 'open',
-    tag,
-    start: m.index,
-    end: m.index + raw.length,
-  };
-}
+// function isSelfClosingTag(str: string): boolean {
+//   const selfClosingTags = str.match(i18nRegex.selfClosingTags);
+//   return selfClosingTags ? selfClosingTags.includes(str) : false;
+// }
 
 /*
- * Finds the `</tag>` that closes the tag opened at `from`, counting nested occurrences of
- * the same name so `<b>a <b>c</b> d</b>` closes on the outer `</b>`, not the inner one.
- * Returns the inner content and the index past the closing tag, or null if never closed.
- */
-function findClosing(
-  input: string,
-  tag: string,
-  from: number,
-): { inner: string; end: number } | null {
-  let depth = 1;
-  let cursor = from;
-
-  for (;;) {
-    const token = nextToken(input, cursor);
-    if (!token) {
-      return null;
-    }
-
-    if (token.tag === tag) {
-      if (token.kind === 'open') {
-        depth += 1;
-      } else if (token.kind === 'close') {
-        depth -= 1;
-        if (depth === 0) {
-          return { inner: input.slice(from, token.start), end: token.end };
-        }
-      }
-    }
-
-    cursor = token.end;
-  }
-}
-
-/**
- * Parses a translation string into an array of plain strings and tag objects.
+ * Parse a given translation string and return an array of strings and objects
+ * e.g. for a key
+ * "Wunderbar! <NuxtLink>The customer <strong>{{ customer.name }}</strong></NuxtLink> hat den <NuxtLink-2>Kurs</NuxtLink-2> erfolgreich absolviert.",
  *
- * @example
- * parseTranslation('<NuxtLink><b>Ada</b></NuxtLink> finished <NuxtLink-2>the course</NuxtLink-2>.')
- * // [
- * //   { tag: 'NuxtLink', content: [{ tag: 'b', content: 'Ada' }] },
- * //   ' finished ',
- * //   { tag: 'NuxtLink-2', content: 'the course' },
- * //   '.',
- * // ]
- *
- * Unclosed and stray closing tags come back as literal text, so a malformed translation
- * degrades to plain text instead of rendering nothing.
+ * Will return
+ * [
+ *   'Wunderbar! ',
+ *   {
+ *     tag: 'NuxtLink',
+ *     content: [
+ *       'The customer ',
+ *       {
+ *         tag: 'strong',
+ *         content: 'Arthur',
+ *       },
+ *     ],
+ *   },
+ *   ' hat den ',
+ *   {
+ *     tag: 'NuxtLink-2',
+ *     content: 'Kurs',
+ *   },
+ *   ' erfolgreich absolviert.',
+ * ]
  */
+
 function parseTranslation(translationString: string): ParsedResult {
   const result: ParsedResult = [];
+
+  // Explicit, readable patterns (support kebab-case and -1 suffixes)
+  const PAIRED_RE = i18nRegex.openingAndClosingTagsWithContent;
+  const SELF_RE = i18nRegex.selfClosingTags;
+
   let cursor = 0;
 
-  while (cursor < translationString.length) {
-    const token = nextToken(translationString, cursor);
-    if (!token) {
-      break;
+  // Find the next earliest tag (paired or self-closing) from a given position
+  function findNext(from: number) {
+    PAIRED_RE.lastIndex = from;
+    SELF_RE.lastIndex = from;
+
+    const paired = PAIRED_RE.exec(translationString);
+
+    const self = SELF_RE.exec(translationString);
+
+    // choose whichever starts earlier; if equal, prefer paired (so <X>…</X> wins over <X/> at same spot)
+    const pick =
+      paired && self
+        ? paired.index <= self.index
+          ? { kind: 'paired', m: paired }
+          : { kind: 'self', m: self }
+        : paired
+          ? { kind: 'paired', m: paired }
+          : self
+            ? { kind: 'self', m: self }
+            : null;
+
+    if (!pick) return null;
+
+    const start = pick.m.index;
+    const end = (pick.kind === 'paired' ? PAIRED_RE : SELF_RE).lastIndex;
+
+    if (pick.kind === 'paired') {
+      const tagName = pick.m[1]; // name for paired
+      const inner = pick.m[3] ?? ''; // inner content
+      return { kind: 'paired' as const, tagName, inner, start, end };
+    } else {
+      const tagName = pick.m[1]; // name for self-closing
+      return { kind: 'self' as const, tagName, start, end };
     }
-
-    // Stray `</tag>` with no opener: keep as text.
-    if (token.kind === 'close') {
-      if (token.start > cursor) {
-        result.push(translationString.slice(cursor, token.start));
-      }
-      result.push(translationString.slice(token.start, token.end));
-      cursor = token.end;
-      continue;
-    }
-
-    if (token.start > cursor) {
-      result.push(translationString.slice(cursor, token.start));
-    }
-
-    if (token.kind === 'self') {
-      result.push({ tag: token.tag });
-      cursor = token.end;
-      continue;
-    }
-
-    const closed = findClosing(translationString, token.tag, token.end);
-
-    // Opened, never closed: keep the raw tag as text so the sentence survives.
-    if (!closed) {
-      result.push(translationString.slice(token.start, token.end));
-      cursor = token.end;
-      continue;
-    }
-
-    const node: TagObject = { tag: token.tag };
-    node.content = areComponentsPresent(closed.inner)
-      ? (parseTranslation(closed.inner) as TagObject[])
-      : closed.inner.trim();
-
-    result.push(node);
-    cursor = closed.end;
   }
 
+  while (cursor < translationString.length) {
+    const next = findNext(cursor);
+    if (!next) break;
+
+    // push plain text before this tag
+    if (next.start > cursor) {
+      result.push(translationString.slice(cursor, next.start));
+    }
+
+    if (next.kind === 'self') {
+      result.push({ tag: next.tagName });
+    } else {
+      // paired tag
+      if (next.inner && areComponentsPresent(next.inner)) {
+        result.push({
+          tag: next.tagName,
+          content: parseTranslation(next.inner) as string | TagObject[],
+        });
+      } else {
+        result.push({ tag: next.tagName, content: (next.inner ?? '').trim() });
+      }
+    }
+
+    cursor = next.end;
+  }
+
+  // trailing text
   if (cursor < translationString.length) {
     result.push(translationString.slice(cursor));
   }
